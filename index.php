@@ -1,5 +1,6 @@
 <?php
-    include "Models/dbconfig.php";
-    $db = new Database();
-    $db->connect();
+require_once 'Controllers/LoginController.php';
+
+$controller = new LoginController();
+$controller->handleRequest();
 ?>
