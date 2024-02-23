@@ -24,8 +24,22 @@ class LoginController {
                 $_SESSION['user'] = $user;
                 echo "Đăng nhập thành công";
             } else {
-                $error = 'Invalid username or password';
-                include 'Views/Login/login.php';
+                $error = '';
+                $usernamenull = '';
+                $passwordnull = '';
+                if ($username == ''){
+                    $error = 'Tài khoản không được để trống';
+                    $usernamenull = 'border-danger';
+                    include 'Views/Login/login.php';
+                } elseif ($password == ''){
+                    $error = 'Mật khẩu không được để trống';
+                    $passwordnull = 'border-danger';
+                    include 'Views/Login/login.php';
+                } else {
+                    $error = 'Tài khoản hoặc mật khẩu không đúng';
+                    include 'Views/Login/login.php';
+                }
+                
             }
         }
     }
