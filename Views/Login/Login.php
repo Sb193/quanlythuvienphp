@@ -40,7 +40,7 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">ĐĂNG NHẬP</h1>
                                     </div>
-                                    <form class="user" action="index.php?action=login" method="post">
+                                    <form class="user" action="index.php?controller=login&action=login" method="post">
                                         <div class="form-group">
                                             <input name="username" type="username" class="form-control form-control-user <?php echo $usernamenull; ?>"
                                                 id="exampleInputEmail" 
@@ -58,8 +58,8 @@
                                             </div>
                                         </div>
 
-                                        <?php if (isset($error)): ?>
-                                            <p class="text-danger"><?php echo $error; ?></p>
+                                        <?php if (isset($error)): ?> 
+                                            <p class="text-danger d-flex justify-content-center"><?php echo $error; ?></p>
                                         <?php endif; ?>
 
                                         <input type="submit" value="Đăng nhập" class="btn btn-primary btn-user btn-block">

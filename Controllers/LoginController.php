@@ -9,9 +9,13 @@ class LoginController {
                 $this->login();
                 break;
             default:
-                include 'Views/Login/Login.php';
+                $this->index();
                 break;
         }
+    }
+
+    public function index() {
+        include 'Views/Login/login.php';
     }
 
     private function login() {
@@ -22,7 +26,7 @@ class LoginController {
             $user = User::getByUsernameAndPassword($username, $password);
             if ($user) {
                 $_SESSION['user'] = $user;
-                echo "Đăng nhập thành công";
+                header("location:index.php?controller=home&action=index");
             } else {
                 $error = '';
                 $usernamenull = '';
