@@ -35,7 +35,7 @@ class User {
     public function getTaiKhoan(){
         return $this->taikhoan;
     }
-    public function getTaiKhau(){
+    public function getMatKhau(){
         return $this->matkhau;
     }
     public function getLoaitk(){

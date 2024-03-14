@@ -34,7 +34,6 @@ class NhanVienController {
         $erorr_taikhoan ="";
         $erorr_matkhau ="";
         if (isset($_POST["add_nhanvien"])) {
-            $manv =$_POST["manv"];
             $hoten =$_POST["hoten"];
             $ngaysinh =$_POST["ngaysinh"];
             $diachi =$_POST["diachi"];
@@ -42,34 +41,71 @@ class NhanVienController {
             $taikhoan =$_POST["taikhoan"];
             $matkhau =$_POST["matkhau"];
 
-            if ($manv == "") {
-                $erorr_manv = "Vui lòng nhập mã nhân viên";
-            } else if ($hoten == "") {
+            if ($hoten == "") {
                 $erorr_hoten = "Vui lòng nhập họ tên";
+                $content = "Views/NhanVien/add.php";
+                include "Views/Shared/HomeView/layout.php";
             } else if ($ngaysinh == "") {
                 $erorr_ngaysinh = "Vui lòng nhập ngày sinh";
+                $content = "Views/NhanVien/add.php";
+                include "Views/Shared/HomeView/layout.php";
             } else if ($diachi == "") {
                 $erorr_diachi = "Vui lòng nhập địa chỉ";
+                $content = "Views/NhanVien/add.php";
+                include "Views/Shared/HomeView/layout.php";
+                
             } else if ($sdt == "") {
                 $erorr_sdt = "Vui lòng nhập số điện thoại";
+                $content = "Views/NhanVien/add.php";
+                include "Views/Shared/HomeView/layout.php";
+                
             } else if (strlen($sdt) != 10) {
-                $erorr_sdt = "Vui lòng nhập đúng định dạng số điệ thoại gồm 10 chữ số";
+
+                $erorr_sdt = "Vui lòng nhập đúng định dạng số điện thoại gồm 10 chữ số";
+                $content = "Views/NhanVien/add.php";
+                include "Views/Shared/HomeView/layout.php";
             } else if ($taikhoan == ""){
                 $erorr_taikhoan = "Vui lòng nhập tài khoản";
+                $content = "Views/NhanVien/add.php";
+                include "Views/Shared/HomeView/layout.php";
             } else if (strlen($taikhoan) < 6) {
                 $erorr_taikhoan = "Vui lòng nhập tài khoản tối thiểu 6 ký tự";
+                $content = "Views/NhanVien/add.php";
+                include "Views/Shared/HomeView/layout.php";
             } else if ($matkhau == ""){
                 $erorr_matkhau = "Vui lòng nhập mật khẩu";
+                $content = "Views/NhanVien/add.php";
+                include "Views/Shared/HomeView/layout.php";
             } else if (strlen($matkhau) < 6) {
                 $erorr_matkhau = "Vui lòng nhập mật khẩu tối thiểu 6 ký tự";
-            }
-
+                $content = "Views/NhanVien/add.php";
+                include "Views/Shared/HomeView/layout.php";
+            } else {
+                $nv = new NhanVien();
+                $nv->setHoTen($hoten);
+                $nv->setNgaySinh($ngaysinh);
+                $nv->setDiaChi($diachi);
+                $nv->setSdt($sdt);
+                $nv->setTaiKhoan(new User($taikhoan,$matkhau,"0"));
+                $result = $nv->addNhanVien();
+                if ($result == -2){
+                    $erorr = "Thêm nhân viên không thành công!(Tài khoản đã tồn tại)";
+                    $content = "Views/NhanVien/add.php";
+                    include "Views/Shared/HomeView/layout.php";
+                } else if($result < 0){
+                    $erorr = "Thêm nhân viên không thành công";
+                    $content = "Views/NhanVien/add.php";
+                    include "Views/Shared/HomeView/layout.php";
+                } else {
+                    header("index.php?controller=nhanvien&action=index");
+                }
+            } 
             
-            
-            
+        } else {
+            $content = "Views/NhanVien/add.php";
+            include "Views/Shared/HomeView/layout.php";
         }
-        $content = "Views/NhanVien/add.php";
-        include "Views/Shared/HomeView/layout.php";
+        
     }
 
 

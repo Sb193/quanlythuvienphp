@@ -14,14 +14,6 @@
                     <div class="card-body">
                         <span class="text-danger"><?php echo $erorr ?></span>
                         <!--Start form-->
-                        
-                        <div class="form-group">
-                            <label for="manv" class="control-label col-md-12">Mã nhân viên</label>
-                            <div class="col-md-12">
-                                <input type="number" name="manv" id="" class="form-control">
-                                <span class="text-danger"><?php echo $erorr_manv ?></span>
-                            </div>
-                        </div>
 
                         <div class="form-group">
                             <label for="hoten" class="control-label col-md-12">Họ tên</label>

@@ -5,7 +5,7 @@ require_once 'Models/dbconfig.php';
 class NhanVien extends Nguoi{
     private $MaNV;
     private $TaiKhoan;
-    public function __construct($MaNguoi , $HoTen , $NgaySinh , $DiaChi , $Sdt , $MaNV , $TaiKhoan){
+    public function __construct($MaNguoi = null , $HoTen = null , $NgaySinh = null , $DiaChi = null , $Sdt = null , $MaNV = null , $TaiKhoan = null){
         parent::__construct($MaNguoi , $HoTen , $NgaySinh , $DiaChi , $Sdt);
         $this->MaNV = $MaNV;
         $this->TaiKhoan = $TaiKhoan;
@@ -59,7 +59,7 @@ class NhanVien extends Nguoi{
                 return $db->insert_data($table, $data);
             } else {
                 // Xoa Tai khoan vừa tạo
-                return -1;
+                return -3;
             }
         } else {
             return -2;
