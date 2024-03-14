@@ -12,6 +12,7 @@ class User {
         $this->matkhau = $matkhau;
         $this->loaitk = $loaitk;
     }
+    
 
 
     public static function getByUsernameAndPassword($username, $password) {
@@ -31,7 +32,70 @@ class User {
         }
     }
     
+    public function getTaiKhoan(){
+        return $this->taikhoan;
+    }
+    public function getTaiKhau(){
+        return $this->matkhau;
+    }
+    public function getLoaitk(){
+        return $this->loaitk;
+    }
+    public function setTaiKhoan($TaiKhoan){
+        $this->taikhoan = $TaiKhoan;
+    }
+    public function setMatKhau($matkhau){
+        $this->matkhau = $matkhau;
+    }
+    public function setLoaitk($loaitk){
+        $this->loaitk = $loaitk;
+    }
+    public static function getAllUser() {
+        $db = Database::getInstance();
+        $result = $db->getData('TaiKhoan');
+        $users = [];
 
+        while ($row = $result->fetch()) {
+            $users[] = new User($row['TaiKhoan'], $row['MatKhau'], $row['LoaiTK']);
+        }
+
+        return $users;
+    }
+
+    public static function getUserbyID($TaiKhoan) {
+        $user = $_SESSION['user'];
+        if ($user == null) {
+            return null;
+        } else if ($user->getLoaitk() == '1') {
+            return $user;
+        }
+        $db = Database::getInstance();
+        $result = $db->getData('TaiKhoan','TaiKhoan', $TaiKhoan);
+        $users = [];
+
+        while ($row = $result->fetch()) {
+            $users[] = new User($row['TaiKhoan'], $row['MatKhau'], $row['LoaiTK']);
+        }
+
+        return $users;
+    }
+    
+    public function addTaiKhoan(){
+        $db = Database::getInstance();
+
+        // Tên của bảng
+        $table = "TaiKhoan";
+
+        // Mảng dữ liệu
+        $data = array(
+            "TaiKhoan" => $this->taikhoan,
+            "MatKhau" => $this->matkhau,
+            "LoaiTK" => $this->loaitk
+        );
+
+        // Gọi hàm thêm dữ liệu vào bảng
+        return $db->insert_data($table, $data);
+    }
 
 }
 ?>

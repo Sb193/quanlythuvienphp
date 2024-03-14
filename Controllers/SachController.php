@@ -1,4 +1,6 @@
 <?php
+require_once 'Models/TaiKhoan.php';
+require_once 'Models/Nguoi.php';
 class SachController {
     public function handleRequest() {
         $action = isset($_GET['action']) ? $_GET['action'] : null;
@@ -14,8 +16,12 @@ class SachController {
     }
 
     private function index() {
-        $content = "Views/Sach/index.php";
+        $index = "Views/Sach/index.php";
+        $addlink = "index.php?controller=sach&action=add";
+        $content = "Views/Shared/IndexView/layout.php";
+        $data = NhanVien::getData();
         include "Views/Shared/HomeView/layout.php";
+        
     }
 
     

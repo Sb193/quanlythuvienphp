@@ -8,7 +8,7 @@ class Database {
         $db   = 'quanlythuviendb';
         $user = 'root';
         $pass = '';
-        $charset = 'utf8mb4';
+        $charset = 'utf8';
 
         $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
         $options = [
@@ -29,5 +29,52 @@ class Database {
     public function prepare($sql) {
         return $this->pdo->prepare($sql);
     }
+
+    public function getData($table, $field = NULL , $id = NULL) {
+        $sql = "";
+        if ($field == NULL && $id == NULL) {
+            $sql = "SELECT * FROM $table";
+        } else {
+            $sql = "SELECT * FROM $table WHERE $field = :id";
+        }
+        $stmt = $this->prepare($sql);
+        if ($field == NULL && $id == NULL) {
+            $stmt->execute();
+        } else {
+            $stmt->execute([':id' => $id]);
+        }
+        
+        return $stmt;
+    }
+
+    function insert_data($table, $data) {
+        // Tạo một mảng để lưu trữ các trường và các giá trị
+        $fields = array();
+        $values = array();
+      
+        // Duyệt qua mảng dữ liệu để lấy các trường và các giá trị
+        foreach ($data as $field => $value) {
+          // Thêm dấu ngoặc kép cho các trường
+          $fields[] = "`$field`";
+          // Thêm dấu hai chấm cho các giá trị
+          $values[] = ":$field";
+        }
+      
+        // Nối các trường và các giá trị thành chuỗi, cách nhau bởi dấu phẩy
+        $fields = implode(", ", $fields);
+        $values = implode(", ", $values);
+      
+        // Tạo câu truy vấn SQL để thêm dữ liệu vào bảng
+        $sql = "INSERT INTO $table ($fields) VALUES ($values)";
+      
+        // Chuẩn bị câu truy vấn
+        $stmt = $this->prepare($sql);
+      
+        // Thực thi câu truy vấn với mảng dữ liệu
+        $stmt->execute($data);
+      
+        // Trả về số dòng bị ảnh hưởng
+        return $stmt->rowCount();
+      }
 }
 ?>

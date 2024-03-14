@@ -20,6 +20,8 @@
 
     <!-- Custom styles for this template-->
     <link href="asset/css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- Custom styles for this page -->
+    <link href="asset/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 </head>
 
@@ -32,7 +34,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index?controller=home&action=index">
                 <img src="asset/img/logo.png" alt="" class="sidebar-brand-icon " style="width: 40px">
                 <div class="sidebar-brand-text mx-1">Thư viện <br> THPT Phú Bình</div>
             </a>
@@ -42,7 +44,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="index?controller=home&action=index">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Trang chủ</span></a>
             </li>
@@ -53,20 +55,11 @@
             <!-- Heading -->
             
 
-            <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
+                <a class="nav-link" href="index.php?controller=sach&action=index">
                     <i class="fa-solid fa-book"></i>
-                    <span>Quản lý sách</span>
+                    <span>Quản lí sách</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Chức năng</h6>
-                        <a class="collapse-item" href="index.php?controller=sach&action=index">Xem danh sách</a>
-                        <a class="collapse-item" href="cards.html">Thêm sách</a>
-                    </div>
-                </div>
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
@@ -157,7 +150,7 @@
                 <div id="collapseUser" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Chức năng</h6>
-                        <a class="collapse-item" href="login.html">Danh sách nhân viên</a>
+                        <a class="collapse-item" href="index.php?controller=nhanvien&action=index">Danh sách nhân viên</a>
                         <a class="collapse-item" href="register.html">Thêm nhân viên</a>
                     </div>
                 </div>
@@ -284,7 +277,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2023</span>
+                        <span>Copyright &copy; Your Website 2024 - Group 5</span>
                     </div>
                 </div>
             </footer>
@@ -339,8 +332,15 @@
     <script src="asset/vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="asset/js/demo/chart-area-demo.js"></script>
+    <script src="asset/js/demo/chart-pie-demo.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="asset/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="asset/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="asset/js/demo/datatables-demo.js"></script>
 
 </body>
 

@@ -6,6 +6,7 @@ if (session_status() === PHP_SESSION_NONE){
 require_once 'controllers/HomeController.php';
 require_once 'controllers/LoginController.php';
 require_once 'controllers/SachController.php';
+require_once 'controllers/NhanVienController.php';
 
 $controller = null;
 
@@ -22,6 +23,9 @@ if (!isset($_SESSION['user'])) {
                 break;
             case 'sach':
                 $controller = new SachController();
+                break;
+            case 'nhanvien':
+                $controller = new NhanVienController();
                 break;
             default:
                 $controller = new HomeController();
