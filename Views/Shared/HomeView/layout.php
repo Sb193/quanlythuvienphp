@@ -62,23 +62,14 @@
                 </a>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
+                <a class="nav-link" href="index.php?controller=theloai&action=index">
                     <i class="fas fa-clipboard-list"></i>
-                    <span>Quản lý thể loại</span>
+                    <span>Quản lí thể loại</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Chức năng</h6>
-                        <a class="collapse-item" href="utilities-color.html">Xem danh sách</a>
-                        <a class="collapse-item" href="utilities-border.html">Thêm thể loại</a>
-                        
-                    </div>
-                </div>
             </li>
+
+            
 
             <!-- Divider -->
             <hr class="sidebar-divider">

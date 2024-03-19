@@ -1,64 +1,48 @@
 <?php
 require_once 'Models/dbconfig.php';
 
-class TaiKhoan {
+class Sach {
 
-    private $taikhoan;
-    private $matkhau;
-    public $loaitk;
+    private $MaSach;
+    private $MaDS;
+    public $TrangThai;
 
-    public function __construct($taikhoan , $matkhau , $loaitk){
-        $this->taikhoan = $taikhoan;
-        $this->matkhau = $matkhau;
-        $this->loaitk = $loaitk;
+    public function __construct($MaSach , $MaDS , $TrangThai){
+        $this->MaSach = $MaSach;
+        $this->MaDS = $MaDS;
+        $this->TrangThai = $TrangThai;
     }
 
-    function isValidUsername($username) {
-        $pattern = "/^[a-zA-Z0-9]*$/";
-        if (preg_match($pattern, $username)) {
-            return true;
-        } else {
-            return false;
-        }
+    public function getMaSach(){
+        return $this->MaSach;
     }
-    
+    public function getMaDS(){
+        return $this->MaDS;
+    }
+    public function getTrangThai(){
+        return $this->TrangThai;
+    }
+    public function setMaSach($MaSach){
+        $this->MaSach = $MaSach;
+    }
+    public function setMaDS($MaDS){
+        $this->MaDS = $MaDS;
+    }
+    public function setTrangThai($TrangThai){
+        $this->TrangThai = $TrangThai;
+    }
 
-
-    public static function getByUsernameAndPassword($username, $password) {
+    public static function getSachbyID($masach) {
         $db = Database::getInstance();
-        $stmt = $db->prepare('SELECT * FROM taikhoan WHERE TaiKhoan = :username AND MatKhau = :password');
-        $stmt->execute([':username' => $username, ':password' => $password]);
-    
-        $result = $stmt->fetch();
-        if ($result){
-            $tk = $result['TaiKhoan'];
-            $mk = $result['MatKhau'];
-            $ltk = $result['LoaiTK'];
-            $user = new TaiKhoan($tk ,$mk  , $ltk);
-            return $user;
-        } else {
-            return NULL;
+        $table = 'Sach';
+        $field = 'MaSach';
+        $result = $db->getData($table, $field, $masach);
+        while($row = $result->fetch()){
+            return new Sach($row['MaSach'],$row['MaDS'],$row['TrangThai']);
         }
     }
     
-    public function getTaiKhoan(){
-        return $this->taikhoan;
-    }
-    public function getMatKhau(){
-        return $this->matkhau;
-    }
-    public function getLoaitk(){
-        return $this->loaitk;
-    }
-    public function setTaiKhoan($TaiKhoan){
-        $this->taikhoan = $TaiKhoan;
-    }
-    public function setMatKhau($matkhau){
-        $this->matkhau = $matkhau;
-    }
-    public function setLoaitk($loaitk){
-        $this->loaitk = $loaitk;
-    }
+    
     public static function getAllUser() {
         $db = Database::getInstance();
         $result = $db->getData('TaiKhoan');

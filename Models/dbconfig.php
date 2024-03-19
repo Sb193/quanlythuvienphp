@@ -47,6 +47,13 @@ class Database {
         return $stmt;
     }
 
+    public function getDatas($sql) {
+        $stmt = $this->prepare($sql);
+        $stmt->execute();
+        
+        return $stmt;
+    }
+
     function insert_data($table, $data) {
         // Tạo một mảng để lưu trữ các trường và các giá trị
         $fields = array();
