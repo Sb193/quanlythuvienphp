@@ -39,14 +39,27 @@ class NhanVien extends Nguoi{
         return $nhanviens;
     }
 
+    public static function getNhanVienbyID($id){
+        $nhanvien = null;
+        $sql = "SELECT nhanvien.MaNV,nguoi.MaNguoi,taikhoan.TaiKhoan,nguoi.HoTen,nguoi.NgaySinh,nguoi.DiaChi,nguoi.Sdt,taikhoan.MatKhau,taikhoan.LoaiTK FROM nhanvien , nguoi , taikhoan WHERE nhanvien.MaNguoi = nguoi.MaNguoi AND nhanvien.TaiKhoan = taikhoan.TaiKhoan AND nhanvien.MaNV = '$id';";
+        $db = Database::getInstance();
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $TaiKhoan = new User($row['TaiKhoan'],$row['MatKhau'],$row['LoaiTK']);
+            $nhanvien = new NhanVien($row['MaNguoi'],$row['HoTen'],$row['NgaySinh'],$row['DiaChi'],$row['Sdt'],$row['MaNV'],$TaiKhoan);
+        }
+
+        return $nhanvien;
+    }
+
     public function addNhanVien(){
         $db = Database::getInstance();
-
         // Tên của bảng
         $table = "NhanVien";
-
         $nguoi = new Nguoi($this->getMaNguoi(),$this->getHoTen(), $this->getNgaySinh(), $this->getDiaChi(),$this->getSdt());
         $taikhoan = new User($this->TaiKhoan->getTaiKhoan(),$this->TaiKhoan->getMatKhau(),$this->TaiKhoan->getLoaiTK());
+        
 
         if ($taikhoan->addTaiKhoan() > 0){
             if ($nguoi->addNguoi() > 0){
@@ -63,6 +76,32 @@ class NhanVien extends Nguoi{
             }
         } else {
             return -2;
+        }
+        
+    }
+
+    public function editNhanVien($id){
+        $db = Database::getInstance();
+        // Tên của bảng
+        $table = "NhanVien";
+        $nhanvien = NhanVien::getNhanVienbyID($id);
+        if ($nhanvien){
+            $nguoi = new Nguoi($nhanvien->getMaNguoi(),$this->getHoTen(), $this->getNgaySinh(), $this->getDiaChi(),$this->getSdt());
+            $taikhoan = new User($nhanvien->TaiKhoan->getTaiKhoan(),$this->TaiKhoan->getMatKhau(),$this->TaiKhoan->getLoaiTK());
+            
+
+            if ($taikhoan->editTaiKhoan() > 0){
+                if ($nguoi->editNguoi() > 0){     
+                    return 1;
+                } else {
+                    // Xoa Tai khoan vừa tạo
+                    return -3;    
+                }
+            } else {
+                return -2;
+            }
+        } else {
+            return 0;
         }
         
     }

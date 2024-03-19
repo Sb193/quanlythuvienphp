@@ -71,10 +71,61 @@ class Database {
         $stmt = $this->prepare($sql);
       
         // Thực thi câu truy vấn với mảng dữ liệu
-        $stmt->execute($data);
+        try {
+            $stmt->execute($data);
+        } 
+        catch (PDOException $e) {
+            return -1;
+        }
+        
       
         // Trả về số dòng bị ảnh hưởng
         return $stmt->rowCount();
-      }
+    }
+
+    function update_data($table, $data, $where) {
+        // Tạo một mảng để lưu trữ các trường và các giá trị
+        $fields = array();
+      
+        // Duyệt qua mảng dữ liệu để lấy các trường và các giá trị
+        foreach ($data as $field => $value) {
+          // Thêm dấu ngoặc kép cho các trường
+          $fields[] = "`$field` = :$field";
+        }
+
+        // Nối các trường và các giá trị thành chuỗi, cách nhau bởi dấu phẩy
+        $fields = implode(", ", $fields);
+
+      
+        // Tạo câu truy vấn SQL để thêm dữ liệu vào bảng
+        $sql = "UPDATE $table SET $fields WHERE $where";
+      
+        // Chuẩn bị câu truy vấn
+        $stmt = $this->prepare($sql);
+      
+        // Thực thi câu truy vấn với mảng dữ liệu
+        try {
+            $stmt->execute($data);
+        } 
+        catch (PDOException $e) {
+            return -1;
+        }
+        
+      
+        // Trả về số dòng bị ảnh hưởng
+        return $stmt->rowCount();
+    }
+
+    function delete_data($table, $where) {
+        $sql = "DELETE FROM $table WHERE $where";
+        $stmt = $this->prepare($sql);
+        try {
+            $stmt->execute();
+        } catch (PDOException $e) {
+            return -1;
+        }
+
+        return $stmt->rowCount();
+    }
 }
 ?>

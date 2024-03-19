@@ -85,6 +85,26 @@ class Nguoi{
         // Gọi hàm thêm dữ liệu vào bảng
         return $db->insert_data($table, $data);
     }
+
+    public function editNguoi(){
+        $db = Database::getInstance();
+
+        // Tên của bảng
+        $table = "Nguoi";
+
+        // Mảng dữ liệu
+        $data = array(
+            "HoTen" => $this->HoTen,
+            "NgaySinh" => $this->NgaySinh,
+            "DiaChi" => $this->DiaChi,
+            "Sdt"=> $this->Sdt
+        );
+
+        $where = "MaNguoi = $this->MaNguoi";
+
+        // Gọi hàm thêm dữ liệu vào bảng
+        return $db->update_data($table, $data, $where);
+    }
     
 }
 ?>

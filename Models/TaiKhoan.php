@@ -97,5 +97,23 @@ class User {
         return $db->insert_data($table, $data);
     }
 
+    public function editTaiKhoan(){
+        $db = Database::getInstance();
+
+        // Tên của bảng
+        $table = "TaiKhoan";
+
+        // Mảng dữ liệu
+        $data = array(
+            "TaiKhoan" => $this->taikhoan,
+            "MatKhau" => $this->matkhau,
+            "LoaiTK" => $this->loaitk
+        );
+
+        $where = "TaiKhoan = $this->taikhoan";
+        // Gọi hàm thêm dữ liệu vào bảng
+        return $db->update_data($table, $data, $where);
+    }
+
 }
 ?>
