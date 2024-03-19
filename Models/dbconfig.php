@@ -5,7 +5,7 @@ class Database {
 
     private function __construct() {
         $host = 'localhost';
-        $db   = 'quanlythuviendb';
+        $db   = 'quanlythuvien';
         $user = 'root';
         $pass = '';
         $charset = 'utf8';

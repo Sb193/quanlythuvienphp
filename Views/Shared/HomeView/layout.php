@@ -124,19 +124,11 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePaages"
-                    aria-expanded="true" aria-controls="collapsePaages">
-                    <i class="fa-solid fa-users"></i>
-                    <span>Quản lý độc giả</span>
-                </a>
-                <div id="collapsePaages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Chức năng</h6>
-                        <a class="collapse-item" href="login.html">Danh sách độc giả</a>
-                        <a class="collapse-item" href="register.html">Thêm độc giả</a>
-                    </div>
-                </div>
-            </li>
+                    <a class="nav-link" href="index.php?controller=taikhoan&action=index">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Quản lí độc giả</span>
+                    </a>
+                </li>
 
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -144,8 +136,15 @@
             <div>
                 <li class="nav-item">
                     <a class="nav-link" href="index.php?controller=nhanvien&action=index">
-                        <i class="fa-solid fa-book"></i>
+                        <i class="fa-solid fa-landmark"></i>
                         <span>Quản lí nhân viên</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?controller=taikhoan&action=index">
+                        <i class="fa-solid fa-user"></i>
+                        <span>Quản lí tài khoản</span>
                     </a>
                 </li>
             </div>

@@ -23,10 +23,10 @@ class TaiKhoanController {
     }
 
     private function index() {
-        $index = "Views/NhanVien/index.php";
-        $addlink = "index.php?controller=nhanvien&action=add";
+        $index = "Views/TaiKhoan/index.php";
+        $addlink = "index.php?controller=taikhoan&action=add";
         $content = "Views/Shared/IndexView/layout.php";
-        $data = NhanVien::getData();
+        $data = User::getAllUser();
         include "Views/Shared/HomeView/layout.php";
     }
 
