@@ -8,7 +8,12 @@ class SachController {
             case 'index':
                 $this->index();
                 break;
-            
+            case 'add':
+                $this->add();
+                break;
+            case 'edit':
+                $this->edit();
+                break;
             default:
                 $this->index();
                 break;
@@ -22,6 +27,18 @@ class SachController {
         $data = NhanVien::getData();
         include "Views/Shared/HomeView/layout.php";
         
+    }
+
+    private function add() {
+
+    }
+
+    private function edit() {
+
+    }
+
+    private function delete() {
+
     }
 
     
