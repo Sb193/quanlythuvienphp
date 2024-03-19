@@ -29,7 +29,7 @@
             <td><?php echo $user->getLoaitk();?></td>
             
             <td>
-                <a class="btn btn-primary" href="index.php?controller=nhanvien&action=edit&id=<?php echo $user->getTaiKhoan();?>">Sửa</a>
+                <a class="btn btn-primary" href="index.php?controller=taikhoan&action=edit&id=<?php echo $user->getTaiKhoan();?>">Sửa</a>
                 <button class="xoa btn btn-danger" data-id="<?php echo $user->getTaiKhoan();?>">Xóa</button>
             </td>
         </tr>

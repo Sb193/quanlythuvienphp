@@ -1,7 +1,7 @@
 <?php
 require_once 'Models/dbconfig.php';
 
-class User {
+class TaiKhoan {
 
     private $taikhoan;
     private $matkhau;
@@ -11,6 +11,15 @@ class User {
         $this->taikhoan = $taikhoan;
         $this->matkhau = $matkhau;
         $this->loaitk = $loaitk;
+    }
+
+    function isValidUsername($username) {
+        $pattern = "/^[a-zA-Z0-9_@*]*$/";
+        if (preg_match($pattern, $username)) {
+            return true;
+        } else {
+            return false;
+        }
     }
     
 
@@ -25,7 +34,7 @@ class User {
             $tk = $result['TaiKhoan'];
             $mk = $result['MatKhau'];
             $ltk = $result['LoaiTK'];
-            $user = new User($tk ,$mk  , $ltk);
+            $user = new TaiKhoan($tk ,$mk  , $ltk);
             return $user;
         } else {
             return NULL;
@@ -56,7 +65,7 @@ class User {
         $users = [];
 
         while ($row = $result->fetch()) {
-            $users[] = new User($row['TaiKhoan'], $row['MatKhau'], $row['LoaiTK']);
+            $users[] = new TaiKhoan($row['TaiKhoan'], $row['MatKhau'], $row['LoaiTK']);
         }
 
         return $users;
@@ -74,13 +83,28 @@ class User {
         $users = [];
 
         while ($row = $result->fetch()) {
-            $users[] = new User($row['TaiKhoan'], $row['MatKhau'], $row['LoaiTK']);
+            $users[] = new TaiKhoan($row['TaiKhoan'], $row['MatKhau'], $row['LoaiTK']);
         }
 
         return $users;
     }
+
+    public static function getUserByuserName($TaiKhoan) {
+        $db = Database::getInstance();
+        $result = $db->getData('TaiKhoan','TaiKhoan', $TaiKhoan);
+
+
+        while ($row = $result->fetch()) {
+            return new TaiKhoan($row['TaiKhoan'], $row['MatKhau'], $row['LoaiTK']);
+        }
+
+        return null;
+    }
     
     public function addTaiKhoan(){
+        if (!$this->isValidUsername($this->taikhoan)) {
+            return -10;
+        }
         $db = Database::getInstance();
 
         // Tên của bảng
@@ -121,7 +145,6 @@ class User {
         $where = "TaiKhoan = '$this->taikhoan'";
 
         return $db->delete_data($table, $where);
-
     }
 
 }

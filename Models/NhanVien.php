@@ -32,7 +32,7 @@ class NhanVien extends Nguoi{
         $stmt = $db->prepare($sql);
         $stmt->execute();
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            $TaiKhoan = new User($row['TaiKhoan'],$row['MatKhau'],$row['LoaiTK']);
+            $TaiKhoan = new TaiKhoan($row['TaiKhoan'],$row['MatKhau'],$row['LoaiTK']);
             $nhanviens[] = new NhanVien($row['MaNguoi'],$row['HoTen'],$row['NgaySinh'],$row['DiaChi'],$row['Sdt'],$row['MaNV'],$TaiKhoan);
         }
 
@@ -46,7 +46,7 @@ class NhanVien extends Nguoi{
         $stmt = $db->prepare($sql);
         $stmt->execute();
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            $TaiKhoan = new User($row['TaiKhoan'],$row['MatKhau'],$row['LoaiTK']);
+            $TaiKhoan = new TaiKhoan($row['TaiKhoan'],$row['MatKhau'],$row['LoaiTK']);
             $nhanvien = new NhanVien($row['MaNguoi'],$row['HoTen'],$row['NgaySinh'],$row['DiaChi'],$row['Sdt'],$row['MaNV'],$TaiKhoan);
         }
 
@@ -58,7 +58,7 @@ class NhanVien extends Nguoi{
         // Tên của bảng
         $table = "NhanVien";
         $nguoi = new Nguoi($this->getMaNguoi(),$this->getHoTen(), $this->getNgaySinh(), $this->getDiaChi(),$this->getSdt());
-        $taikhoan = new User($this->TaiKhoan->getTaiKhoan(),$this->TaiKhoan->getMatKhau(),$this->TaiKhoan->getLoaiTK());
+        $taikhoan = new TaiKhoan($this->TaiKhoan->getTaiKhoan(),$this->TaiKhoan->getMatKhau(),$this->TaiKhoan->getLoaiTK());
         
 
         if ($taikhoan->addTaiKhoan() > 0){
@@ -84,7 +84,7 @@ class NhanVien extends Nguoi{
         $nhanvien = NhanVien::getNhanVienbyID($this->MaNV);
         if ($nhanvien){
             $nguoi = new Nguoi($nhanvien->getMaNguoi(),$this->getHoTen(), $this->getNgaySinh(), $this->getDiaChi(),$this->getSdt());
-            $taikhoan = new User($nhanvien->TaiKhoan->getTaiKhoan(),$this->TaiKhoan->getMatKhau(),$this->TaiKhoan->getLoaiTK());
+            $taikhoan = new TaiKhoan($nhanvien->TaiKhoan->getTaiKhoan(),$this->TaiKhoan->getMatKhau(),$this->TaiKhoan->getLoaiTK());
             
 
             if ($taikhoan->editTaiKhoan() >= 0){

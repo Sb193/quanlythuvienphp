@@ -1,64 +1,25 @@
 
+
+
 <div class="d-flex justify-content-center">
     <div class="col-md-8">
         <div class="card shadow mb-6 ">
             <form action="" method="post">
                 <div class="form-horizontal">
                     <div class="card-header">
-                        <h4 class="font-weight-bold text-primary d-flex justify-content-center align-items-center m-0">Biểu mẫu cập nhật thông tin nhân viên</h4>
+                        <h4 class="font-weight-bold text-primary d-flex justify-content-center align-items-center m-0">Biểu mẫu cập nhật tài khoản</h4>
                     </div>
 
 
                     <div class="card-body">
                         <span class="text-danger"><?php echo $erorr ?></span>
                         <!--Start form-->
-
-                        <input hidden type="text" name="id" id="" class="form-control" value="<?php echo $nhanvien->getMaNV()?>">
-
-                        <div class="form-group">
-                            <label for="hoten" class="control-label col-md-12">Họ tên</label>
-                            <div class="col-md-12">
-                                <input type="text" name="hoten" id="" class="form-control" value="<?php echo $nhanvien->getHoTen()?>">
-                                <span class="text-danger"><?php echo $erorr_hoten ?></span>
-                            </div>
-                        </div>
-
-                        
-                        <div class="form-group row">
-                            <div class="col-md-5">
-                                <label for="ngaysinh" class="control-label col-md-12">Ngày sinh</label>
-                                <div class="col-md-12">
-                                    <input type="date" name="ngaysinh" id="" class="form-control" value="<?php echo $nhanvien->getNgaySinh()?>">
-                                    <span class="text-danger"><?php echo $erorr_ngaysinh ?></span>
-                                </div>
-                            </div>
-
-                            <div class="col-md-7">
-                                <label for="sdt" class="control-label col-md-12">Số điện thoại</label>
-                                <div class="col-md-12">
-                                    <input type="text" name="sdt" id="" class="form-control" value="<?php echo $nhanvien->getSdt()?>">
-                                    <span class="text-danger"><?php echo $erorr_sdt ?></span>
-                                </div>
-                            </div>
-
-
-                            
-                        </div>
-
-                        <div class="form-group">
-                            <label for="diachi" class="control-label col-md-12">Địa chỉ</label>
-                            <div class="col-md-12">
-                                <input type="text" name="diachi" id="" class="form-control" value="<?php echo $nhanvien->getDiaChi()?>">
-                                <span class="text-danger"><?php echo $erorr_diachi ?></span>
-                            </div>
-                        </div>
-
                         
 
                         <div class="form-group">
                             <label for="taikhoan" class="control-label col-md-12">Tài khoản</label>
                             <div class="col-md-12">
-                                <input type="text" readonly name="taikhoan" id="" class="form-control" value="<?php echo $nhanvien->TaiKhoan->getTaiKhoan()?>">
+                                <input type="text" name="taikhoan" id="" class="form-control" value="<?php echo $user->getTaiKhoan()?>">
                                 <span class="text-danger"><?php echo $erorr_taikhoan ?></span>
                             </div>
                         </div>
@@ -67,7 +28,7 @@
                             <div class="col-md-5">
                                 <label for="matkhau" class="control-label col-md-12">Mật khẩu</label>
                                 <div class="col-md-12">
-                                    <input type="password" name="matkhau" id="password" class="form-control" value="<?php echo $nhanvien->TaiKhoan->getMatKhau()?>">
+                                    <input type="password" name="matkhau" id="password" class="form-control" value="<?php echo $user->getMatKhau()?>">
                                     <span class="text-danger"><?php echo $erorr_matkhau ?></span>
                                 </div>
                             </div>
@@ -154,11 +115,11 @@
                         <!--End Form-->
                         <div class="form-group d-flex align-items-center">
                             <div class="col-md-offset-2 col-md-5 text-right">
-                                <input type="submit" name="edit_nhanvien" value="Cập nhật" class="btn btn-primary pl-3 pr-3" />
+                                <input type="submit" name="add_taikhoan" value="Thêm" class="btn btn-primary pl-3 pr-3" />
                             </div>
 
                             <div class="col-md-offset-2 col-md-5 ">
-                                <a href="index?controller=nhanvien&action=index" class="btn btn-default h4 pl-3 pr-3">Trở lại</a>
+                                <a href="index?controller=taikhoan&action=index" class="btn btn-default h4 pl-3 pr-3">Trở lại</a>
                             </div>
                         </div>
 

@@ -23,7 +23,7 @@ class LoginController {
             $username = $_POST['username'];
             $password = $_POST['password'];
 
-            $user = User::getByUsernameAndPassword($username, $password);
+            $user = TaiKhoan::getByUsernameAndPassword($username, $password);
             if ($user) {
                 $_SESSION['user'] = $user;
                 

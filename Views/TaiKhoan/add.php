@@ -115,11 +115,11 @@
                         <!--End Form-->
                         <div class="form-group d-flex align-items-center">
                             <div class="col-md-offset-2 col-md-5 text-right">
-                                <input type="submit" name="add_nhanvien" value="Thêm" class="btn btn-primary pl-3 pr-3" />
+                                <input type="submit" name="add_taikhoan" value="Thêm" class="btn btn-primary pl-3 pr-3" />
                             </div>
 
                             <div class="col-md-offset-2 col-md-5 ">
-                                <a href="index?controller=nhanvien&action=index" class="btn btn-default h4 pl-3 pr-3">Trở lại</a>
+                                <a href="index?controller=taikhoan&action=index" class="btn btn-default h4 pl-3 pr-3">Trở lại</a>
                             </div>
                         </div>
 

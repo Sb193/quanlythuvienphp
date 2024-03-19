@@ -92,7 +92,7 @@ class NhanVienController {
                 $nv->setNgaySinh($ngaysinh);
                 $nv->setDiaChi($diachi);
                 $nv->setSdt($sdt);
-                $nv->setTaiKhoan(new User($taikhoan,$matkhau,"0"));
+                $nv->setTaiKhoan(new TaiKhoan($taikhoan,$matkhau,"0"));
                 $result = $nv->addNhanVien();
                 if ($result == -2){
                     $erorr = "Thêm nhân viên không thành công!(Tài khoản đã tồn tại)";
@@ -184,7 +184,7 @@ class NhanVienController {
                         $nv->setNgaySinh($ngaysinh);
                         $nv->setDiaChi($diachi);
                         $nv->setSdt($sdt);
-                        $nv->setTaiKhoan(new User($taikhoan,$matkhau,"0"));
+                        $nv->setTaiKhoan(new TaiKhoan($taikhoan,$matkhau,"0"));
                         $result = $nv->editNhanVien();
                         if ($result == -2){
                             $erorr = "Cập nhật nhân viên không thành công!";
