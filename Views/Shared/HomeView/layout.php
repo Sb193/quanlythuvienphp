@@ -141,20 +141,14 @@
             <hr class="sidebar-divider d-none d-md-block">
 
             <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser"
-                    aria-expanded="true" aria-controls="collapseUser">
-                    <i class="fa-solid fa-user"></i>
-                    <span>Quản lý nhân viên</span>
-                </a>
-                <div id="collapseUser" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Chức năng</h6>
-                        <a class="collapse-item" href="index.php?controller=nhanvien&action=index">Danh sách nhân viên</a>
-                        <a class="collapse-item" href="register.html">Thêm nhân viên</a>
-                    </div>
-                </div>
-            </li>
+            <div>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?controller=nhanvien&action=index">
+                        <i class="fa-solid fa-book"></i>
+                        <span>Quản lí nhân viên</span>
+                    </a>
+                </li>
+            </div>
 
 
             <!-- Divider -->

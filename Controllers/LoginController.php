@@ -26,6 +26,7 @@ class LoginController {
             $user = User::getByUsernameAndPassword($username, $password);
             if ($user) {
                 $_SESSION['user'] = $user;
+                
                 header("location:index.php?controller=home&action=index");
             } else {
                 $error = '';

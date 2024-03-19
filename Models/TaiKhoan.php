@@ -5,7 +5,7 @@ class User {
 
     private $taikhoan;
     private $matkhau;
-    private $loaitk;
+    public $loaitk;
 
     public function __construct($taikhoan , $matkhau , $loaitk){
         $this->taikhoan = $taikhoan;
@@ -105,14 +105,23 @@ class User {
 
         // Mảng dữ liệu
         $data = array(
-            "TaiKhoan" => $this->taikhoan,
             "MatKhau" => $this->matkhau,
             "LoaiTK" => $this->loaitk
         );
 
-        $where = "TaiKhoan = $this->taikhoan";
+        $where = "TaiKhoan = '$this->taikhoan'";
         // Gọi hàm thêm dữ liệu vào bảng
         return $db->update_data($table, $data, $where);
+    }
+
+    public function deleteTaiKhoan(){
+        $db = Database::getInstance();
+        
+        $table = "TaiKhoan";
+        $where = "TaiKhoan = '$this->taikhoan'";
+
+        return $db->delete_data($table, $where);
+
     }
 
 }

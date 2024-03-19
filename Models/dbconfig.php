@@ -99,9 +99,10 @@ class Database {
       
         // Tạo câu truy vấn SQL để thêm dữ liệu vào bảng
         $sql = "UPDATE $table SET $fields WHERE $where";
-      
         // Chuẩn bị câu truy vấn
         $stmt = $this->prepare($sql);
+
+        
       
         // Thực thi câu truy vấn với mảng dữ liệu
         try {

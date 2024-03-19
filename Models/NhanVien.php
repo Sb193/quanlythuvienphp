@@ -4,7 +4,7 @@ require_once("Models/Nguoi.php");
 require_once 'Models/dbconfig.php';
 class NhanVien extends Nguoi{
     private $MaNV;
-    private $TaiKhoan;
+    public $TaiKhoan;
     public function __construct($MaNguoi = null , $HoTen = null , $NgaySinh = null , $DiaChi = null , $Sdt = null , $MaNV = null , $TaiKhoan = null){
         parent::__construct($MaNguoi , $HoTen , $NgaySinh , $DiaChi , $Sdt);
         $this->MaNV = $MaNV;
@@ -80,21 +80,17 @@ class NhanVien extends Nguoi{
         
     }
 
-    public function editNhanVien($id){
-        $db = Database::getInstance();
-        // Tên của bảng
-        $table = "NhanVien";
-        $nhanvien = NhanVien::getNhanVienbyID($id);
+    public function editNhanVien(){
+        $nhanvien = NhanVien::getNhanVienbyID($this->MaNV);
         if ($nhanvien){
             $nguoi = new Nguoi($nhanvien->getMaNguoi(),$this->getHoTen(), $this->getNgaySinh(), $this->getDiaChi(),$this->getSdt());
             $taikhoan = new User($nhanvien->TaiKhoan->getTaiKhoan(),$this->TaiKhoan->getMatKhau(),$this->TaiKhoan->getLoaiTK());
             
 
-            if ($taikhoan->editTaiKhoan() > 0){
-                if ($nguoi->editNguoi() > 0){     
+            if ($taikhoan->editTaiKhoan() >= 0){
+                if ($nguoi->editNguoi() >= 0){     
                     return 1;
                 } else {
-                    // Xoa Tai khoan vừa tạo
                     return -3;    
                 }
             } else {
@@ -104,6 +100,28 @@ class NhanVien extends Nguoi{
             return 0;
         }
         
+    }
+
+    public function deleteNhanVien(){
+        $db = Database::getInstance();
+        $nhanvien = NhanVien::getNhanVienbyID($this->MaNV);
+        if ($nhanvien){
+            $table = "NhanVien";
+            $where = "MaNV = '$this->MaNV'";
+            $result = $db->delete_data($table, $where);
+            if ($result >= 0){
+                $taikhoan = $nhanvien->getTaiKhoan();
+                if ($taikhoan->deleteTaiKhoan() >= 0){
+                    return $nhanvien->deleteNguoi();
+                } else {
+                    return -3;
+                }   
+            } else {
+                return -2;
+            }
+        } else {
+            return -1;
+        }
     }
 }
 ?>

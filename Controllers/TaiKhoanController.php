@@ -1,6 +1,6 @@
 <?php
 require_once 'Models/NhanVien.php';
-class NhanVienController {
+class TaiKhoanController {
     public function handleRequest() {
         $action = isset($_GET['action']) ? $_GET['action'] : null;
         switch ($action) {

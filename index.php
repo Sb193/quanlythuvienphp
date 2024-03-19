@@ -3,16 +3,20 @@ if (session_status() === PHP_SESSION_NONE){
     session_start();
 }
 
+require_once 'Models/TaiKhoan.php';
 require_once 'controllers/HomeController.php';
 require_once 'controllers/LoginController.php';
 require_once 'controllers/SachController.php';
 require_once 'controllers/NhanVienController.php';
+require_once 'controllers/TaiKhoanController.php';
+
 
 $controller = null;
 
 if (!isset($_SESSION['user'])) {
     $controller = new LoginController();
 } else {
+    $user = $_SESSION['user'];
     $cont = isset($_GET['controller']) ? $_GET['controller'] : null;
         switch ($cont) {
             case 'login':
@@ -26,6 +30,9 @@ if (!isset($_SESSION['user'])) {
                 break;
             case 'nhanvien':
                 $controller = new NhanVienController();
+                break;
+            case 'taikhoan':
+                $controller = new TaiKhoanController();
                 break;
             default:
                 $controller = new HomeController();

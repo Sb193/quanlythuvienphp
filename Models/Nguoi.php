@@ -88,6 +88,7 @@ class Nguoi{
 
     public function editNguoi(){
         $db = Database::getInstance();
+        
 
         // Tên của bảng
         $table = "Nguoi";
@@ -100,10 +101,18 @@ class Nguoi{
             "Sdt"=> $this->Sdt
         );
 
-        $where = "MaNguoi = $this->MaNguoi";
+        $where = "MaNguoi = '$this->MaNguoi'";
 
         // Gọi hàm thêm dữ liệu vào bảng
         return $db->update_data($table, $data, $where);
+    }
+
+    public function deleteNguoi(){
+        $db = Database::getInstance();
+        $table = "Nguoi";
+        $where = "MaNguoi = '$this->MaNguoi'";
+
+        return $db->delete_data($table, $where);
     }
     
 }
