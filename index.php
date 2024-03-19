@@ -39,6 +39,7 @@ if (!isset($_SESSION['user'])) {
                 break;
             case 'docgia':
                 $controller = new DocGiaController();
+                break;
             case 'theloai':
                 $controller = new TheLoaiController();
                 break;
