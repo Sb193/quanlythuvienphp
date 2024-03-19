@@ -1,7 +1,6 @@
 <?php
 require_once 'Models/dbconfig.php';
 require_once("Models/Nguoi.php");
-require_once("TheThuVien.php");
 
 class DocGia extends Nguoi
 {

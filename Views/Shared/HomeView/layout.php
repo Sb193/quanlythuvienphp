@@ -124,7 +124,7 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                    <a class="nav-link" href="index.php?controller=taikhoan&action=index">
+                    <a class="nav-link" href="index.php?controller=docgia&action=index">
                         <i class="fa-solid fa-users"></i>
                         <span>Quản lí độc giả</span>
                     </a>
