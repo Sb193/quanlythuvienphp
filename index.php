@@ -9,7 +9,9 @@ require_once 'controllers/LoginController.php';
 require_once 'controllers/SachController.php';
 require_once 'controllers/NhanVienController.php';
 require_once 'controllers/TaiKhoanController.php';
+require_once 'controllers/DocGiaController.php';
 require_once 'controllers/TheLoaiController.php';
+
 
 
 $controller = null;
@@ -34,6 +36,9 @@ if (!isset($_SESSION['user'])) {
                 break;
             case 'taikhoan':
                 $controller = new TaiKhoanController();
+                break;
+            case 'docgia':
+                $controller = new DocGiaController();
                 break;
             case 'theloai':
                 $controller = new TheLoaiController();
