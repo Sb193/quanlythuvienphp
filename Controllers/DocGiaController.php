@@ -32,83 +32,74 @@ class DocGiaController {
 
     private function add() {
         $erorr ="";
-        $erorr_manv ="";
+        $erorr_madg ="";
+        $erorr_loaidg ="";
+        $erorr_mattv ="";
         $erorr_hoten ="";
         $erorr_ngaysinh ="";
         $erorr_diachi ="";
         $erorr_sdt ="";
-        $erorr_taikhoan ="";
-        $erorr_matkhau ="";
-        if (isset($_POST["add_nhanvien"])) {
+        if (isset($_POST["add_docgia"])) {
+            $madg = $_POST["madg"];
+            $loaidg = $_POST["loaidg"];
+            $mattv = $_POST["mattv"];
             $hoten =$_POST["hoten"];
             $ngaysinh =$_POST["ngaysinh"];
             $diachi =$_POST["diachi"];
             $sdt =$_POST["sdt"];
-            $taikhoan =$_POST["taikhoan"];
-            $matkhau =$_POST["matkhau"];
 
-            if ($hoten == "") {
+            if ($loaidg == ""){
+                $erorr_madg = "Vui lòng nhập loại độc giả";
+                $content = "Views/DocGia/add.php";
+            } else if ($mattv == ""){
+                $erorr_mattv = "Vui lòng nhập mã thẻ thư viện";
+                $content = "Views/DocGia/add.php";
+            } else if ($hoten == "") {
                 $erorr_hoten = "Vui lòng nhập họ tên";
-                $content = "Views/NhanVien/add.php";
+                $content = "Views/DocGia/add.php";
                 include "Views/Shared/HomeView/layout.php";
             } else if ($ngaysinh == "") {
                 $erorr_ngaysinh = "Vui lòng nhập ngày sinh";
-                $content = "Views/NhanVien/add.php";
+                $content = "Views/DocGia/add.php";
                 include "Views/Shared/HomeView/layout.php";
             } else if ($diachi == "") {
                 $erorr_diachi = "Vui lòng nhập địa chỉ";
-                $content = "Views/NhanVien/add.php";
+                $content = "Views/DocGia/add.php";
                 include "Views/Shared/HomeView/layout.php";
-                
             } else if ($sdt == "") {
                 $erorr_sdt = "Vui lòng nhập số điện thoại";
-                $content = "Views/NhanVien/add.php";
+                $content = "Views/DocGia/add.php";
                 include "Views/Shared/HomeView/layout.php";
                 
             } else if (strlen($sdt) != 10) {
 
                 $erorr_sdt = "Vui lòng nhập đúng định dạng số điện thoại gồm 10 chữ số";
-                $content = "Views/NhanVien/add.php";
-                include "Views/Shared/HomeView/layout.php";
-            } else if ($taikhoan == ""){
-                $erorr_taikhoan = "Vui lòng nhập tài khoản";
-                $content = "Views/NhanVien/add.php";
-                include "Views/Shared/HomeView/layout.php";
-            } else if (strlen($taikhoan) < 6) {
-                $erorr_taikhoan = "Vui lòng nhập tài khoản tối thiểu 6 ký tự";
-                $content = "Views/NhanVien/add.php";
-                include "Views/Shared/HomeView/layout.php";
-            } else if ($matkhau == ""){
-                $erorr_matkhau = "Vui lòng nhập mật khẩu";
-                $content = "Views/NhanVien/add.php";
-                include "Views/Shared/HomeView/layout.php";
-            } else if (strlen($matkhau) < 6) {
-                $erorr_matkhau = "Vui lòng nhập mật khẩu tối thiểu 6 ký tự";
-                $content = "Views/NhanVien/add.php";
+                $content = "Views/DocGia/add.php";
                 include "Views/Shared/HomeView/layout.php";
             } else {
-                $nv = new NhanVien();
-                $nv->setHoTen($hoten);
-                $nv->setNgaySinh($ngaysinh);
-                $nv->setDiaChi($diachi);
-                $nv->setSdt($sdt);
-                $nv->setTaiKhoan(new TaiKhoan($taikhoan,$matkhau,"0"));
-                $result = $nv->addNhanVien();
+                $dg = new DocGia();
+                $dg->setLoaiDG($loaidg);
+                $dg->setMaTTV($mattv);
+                $dg->setHoTen($hoten);
+                $dg->setNgaySinh($ngaysinh);
+                $dg->setDiaChi($diachi);
+                $dg->setSdt($sdt);
+                $result = $dg->addDocGia();
                 if ($result == -2){
-                    $erorr = "Thêm nhân viên không thành công!(Tài khoản đã tồn tại)";
-                    $content = "Views/NhanVien/add.php";
+                    $erorr = "Thêm độc giả không thành công!(Tài khoản đã tồn tại)";
+                    $content = "Views/DocGia/add.php";
                     include "Views/Shared/HomeView/layout.php";
                 } else if($result < 0){
-                    $erorr = "Thêm nhân viên không thành công";
-                    $content = "Views/NhanVien/add.php";
+                    $erorr = "Thêm độc giả không thành công";
+                    $content = "Views/DocGia/add.php";
                     include "Views/Shared/HomeView/layout.php";
                 } else {
-                    header("location:index.php?controller=nhanvien&action=index");
+                    header("location:index.php?controller=docgia&action=index");
                 }
             } 
             
         } else {
-            $content = "Views/NhanVien/add.php";
+            $content = "Views/DocGia/add.php";
             include "Views/Shared/HomeView/layout.php";
         }
         
@@ -117,7 +108,7 @@ class DocGiaController {
     private function edit() {
 
         $erorr ="";
-        $erorr_manv ="";
+        $erorr_madg ="";
         $erorr_hoten ="";
         $erorr_ngaysinh ="";
         $erorr_diachi ="";
@@ -140,66 +131,66 @@ class DocGiaController {
 
                     if ($hoten == "") {
                         $erorr_hoten = "Vui lòng nhập họ tên";
-                        $content = "Views/NhanVien/edit.php";
+                        $content = "Views/DocGia/edit.php";
                         include "Views/Shared/HomeView/layout.php";
                     } else if ($ngaysinh == "") {
                         $erorr_ngaysinh = "Vui lòng nhập ngày sinh";
-                        $content = "Views/NhanVien/edit.php";
+                        $content = "Views/DocGia/edit.php";
                         include "Views/Shared/HomeView/layout.php";
                     } else if ($diachi == "") {
                         $erorr_diachi = "Vui lòng nhập địa chỉ";
-                        $content = "Views/NhanVien/edit.php";
+                        $content = "Views/DocGia/edit.php";
                         include "Views/Shared/HomeView/layout.php";
                         
                     } else if ($sdt == "") {
                         $erorr_sdt = "Vui lòng nhập số điện thoại";
-                        $content = "Views/NhanVien/edit.php";
+                        $content = "Views/DocGia/edit.php";
                         include "Views/Shared/HomeView/layout.php";
                         
                     } else if (strlen($sdt) != 10) {
 
                         $erorr_sdt = "Vui lòng nhập đúng định dạng số điện thoại gồm 10 chữ số";
-                        $content = "Views/NhanVien/edit.php";
+                        $content = "Views/DocGia/edit.php";
                         include "Views/Shared/HomeView/layout.php";
                     } else if ($taikhoan == ""){
                         $erorr_taikhoan = "Vui lòng nhập tài khoản";
-                        $content = "Views/NhanVien/edit.php";
+                        $content = "Views/DocGia/edit.php";
                         include "Views/Shared/HomeView/layout.php";
                     } else if (strlen($taikhoan) < 6) {
                         $erorr_taikhoan = "Vui lòng nhập tài khoản tối thiểu 6 ký tự";
-                        $content = "Views/NhanVien/edit.php";
+                        $content = "Views/DocGia/edit.php";
                         include "Views/Shared/HomeView/layout.php";
                     } else if ($matkhau == ""){
                         $erorr_matkhau = "Vui lòng nhập mật khẩu";
-                        $content = "Views/NhanVien/edit.php";
+                        $content = "Views/DocGia/edit.php";
                         include "Views/Shared/HomeView/layout.php";
                     } else if (strlen($matkhau) < 6) {
                         $erorr_matkhau = "Vui lòng nhập mật khẩu tối thiểu 6 ký tự";
-                        $content = "Views/NhanVien/edit.php";
+                        $content = "Views/DocGia/edit.php";
                         include "Views/Shared/HomeView/layout.php";
                     } else {
-                        $nv = new NhanVien();
-                        $nv->setMaNV($nhanvien_id);
-                        $nv->setHoTen($hoten);
-                        $nv->setNgaySinh($ngaysinh);
-                        $nv->setDiaChi($diachi);
-                        $nv->setSdt($sdt);
-                        $nv->setTaiKhoan(new TaiKhoan($taikhoan,$matkhau,"0"));
-                        $result = $nv->editNhanVien();
+                        $dg = new NhanVien();
+                        $dg->setMaNV($nhanvien_id);
+                        $dg->setHoTen($hoten);
+                        $dg->setNgaySinh($ngaysinh);
+                        $dg->setDiaChi($diachi);
+                        $dg->setSdt($sdt);
+                        $dg->setTaiKhoan(new TaiKhoan($taikhoan,$matkhau,"0"));
+                        $result = $dg->editNhanVien();
                         if ($result == -2){
                             $erorr = "Cập nhật nhân viên không thành công!";
-                            $content = "Views/NhanVien/edit.php";
+                            $content = "Views/DocGia/edit.php";
                             include "Views/Shared/HomeView/layout.php";
                         } else if($result < 0){
                             $erorr = "Cập nhật nhân viên không thành công";
-                            $content = "Views/NhanVien/edit.php";
+                            $content = "Views/DocGia/edit.php";
                             include "Views/Shared/HomeView/layout.php";
                         } else {
                             header("location:index.php?controller=nhanvien&action=index");
                         }
                     } 
                 } else {
-                    $content = "Views/NhanVien/edit.php";
+                    $content = "Views/DocGia/edit.php";
                     include "Views/Shared/HomeView/layout.php";
                 }
             } else {
