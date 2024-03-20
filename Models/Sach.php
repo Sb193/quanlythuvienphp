@@ -87,6 +87,7 @@ class Sach {
         return $db->update_data($table, $data, $where);
     }
 
+
     public function deleteSach(){
         $db = Database::getInstance();
         
