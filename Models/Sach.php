@@ -93,7 +93,17 @@ class Sach {
         $table = "Sach";
         $where = "MaSach = '$this->MaSach'";
 
-        return $db->delete_data($table, $where);
+        $result =  $db->delete_data($table, $where);
+        if($result > 0){
+            $dausach = DauSach::getDS($this->MaDS);
+            $dausach->setSoLuong($dausach->getSoLuong() - 1);
+            $r = $dausach->updateDauSach();
+        } else {
+            return 0;
+        }
+
+        // Gọi hàm thêm dữ liệu vào bảng
+        return $r;
     }
 
 }

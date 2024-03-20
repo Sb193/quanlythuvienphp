@@ -55,7 +55,7 @@
 
             <script src="https://kit.fontawesome.com/d69cbc9d77.js" crossorigin="anonymous"></script>
         </div>
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <?php
         foreach ($sachs as $sach) {
         ?>
@@ -86,7 +86,7 @@
                             </div> 
 
                             <div class="form-group d-flex align-items-center justify-content-center">
-                                <button class="btn btn-danger">Xóa</button>
+                                <button class="xoa btn btn-danger" data-id="<?php echo $sach->getMaSach();?>">Xóa</button>
                             </div>
 
                         </div>
@@ -102,6 +102,33 @@
 
 
         <?php }?>
+        <script>
+        // Giả sử bạn đã thêm class 'xoa' vào nút xóa của mình
+        let xoaButtons = document.querySelectorAll('.xoa');
+
+        xoaButtons.forEach((btn) => {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                // Lấy id của người dùng từ thuộc tính data-id của nút xóa
+                let idNguoiDung = this.getAttribute('data-id');
+
+                Swal.fire({
+                    title: 'Bạn có chắc chắn muốn xóa thể loại này không?',
+                    icon: 'error',
+                    showCancelButton: true,
+                    confirmButtonColor: '#e74a3b',
+                    confirmButtonText: 'Xóa',
+                    cancelButtonColor: '#858796',
+                    cancelButtonText: 'Hủy'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "index.php?controller=sach&action=deletebook&id=" + idNguoiDung;
+                    }
+                });
+            });
+        });
+        </script>
 
     </div>
     <script src="https://kit.fontawesome.com/d69cbc9d77.js" crossorigin="anonymous"></script>

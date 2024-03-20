@@ -24,6 +24,9 @@ class SachController {
             case 'addbook':
                 $this->addbook();
                 break;
+            case 'deletebook':
+                $this->deletebook();
+                break;
             default:
                 $this->index();
                 break;
@@ -193,6 +196,24 @@ class SachController {
                 include "Views/Shared/HomeView/layout.php";
             }
         }
+    }
+
+    private function deletebook(){
+        if (isset($_GET["id"])){
+        $id = $_GET["id"];
+            $sach = Sach::getSachbyID($id);
+            if($sach){
+                $result = $sach->deleteSach();
+                $mads = $sach->getMaDS();
+                if ($result >= 0){
+                    header("location:index.php?controller=sach&action=detail&id=$mads");
+                } else {
+                    
+                }
+            } else {
+                
+            }
+        } else {}
     }
 
     
