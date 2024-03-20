@@ -50,6 +50,18 @@ class DocGia extends Nguoi
         $stmt = $db->prepare($sql);
         $stmt->execute();
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            return new DocGia($row['MaDG'] ,  $row['LoaiDG'], $row['MaTTV'], $row['HoTen'],$row['NgaySinh'],$row['DiaChi'],$row['Sdt']);
+        }
+        return null;
+    }
+
+    public static function getDocGiaByTTV($id) {
+        $docgia = null;
+        $sql = "SELECT docgia.MaDG, docgia.LoaiDG, docgia.MaTTV, nguoi.HoTen, nguoi.NgaySinh, nguoi.DiaChi, nguoi.Sdt FROM docgia, nguoi WHERE docgia.MaNguoi = nguoi.MaNguoi AND docgia.MaTTV = '$id';";
+        $db = Database::getInstance();
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             $docgia = new DocGia($row['MaDG'], $row['MaTTV'], $row['HoTen'],$row['NgaySinh'],$row['DiaChi'],$row['Sdt']);
         }
         return $docgia;

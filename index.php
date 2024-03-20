@@ -11,6 +11,7 @@ require_once 'controllers/NhanVienController.php';
 require_once 'controllers/TaiKhoanController.php';
 require_once 'controllers/DocGiaController.php';
 require_once 'controllers/TheLoaiController.php';
+require_once 'controllers/PhieuMuonController.php';
 
 
 
@@ -42,6 +43,9 @@ if (!isset($_SESSION['user'])) {
                 break;
             case 'theloai':
                 $controller = new TheLoaiController();
+                break;
+            case 'phieumuon':
+                $controller = new PhieuMuonController();
                 break;
             default:
                 $controller = new HomeController();

@@ -76,24 +76,13 @@
 
             <!-- Heading -->
             
-
-            <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePagees"
-                    aria-expanded="true" aria-controls="collapsePagees">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Quản lý mượn trả</span>
+                <a class="nav-link" href="index.php?controller=phieumuon&action=index">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Quản lí mượn trả</span>
                 </a>
-                <div id="collapsePagees" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Chức năng</h6>
-                        <a class="collapse-item" href="login.html">Danh sách phiếu mượn</a>
-                        <a class="collapse-item" href="register.html">Thêm phiếu mượn</a>
-                        <a class="collapse-item" href="forgot-password.html">Thêm phiếu phạt</a>
-                        <a class="collapse-item" href="404.html">Cập nhật trả</a>
-                    </div>
-                </div>
             </li>
+            
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">

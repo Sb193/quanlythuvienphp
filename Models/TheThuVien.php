@@ -26,8 +26,19 @@ class TheThuVien
         $ttv = null;
         foreach($result as $row){
             $ttv = new TheThuVien($row['MaTTV'], $row['ThoiHan']);
-        } var_dump($ttv);
+        }
         return $ttv;
+    }
+
+    
+
+    public static function getTTVbyID($id){
+        $db = Database::getInstance();
+        $result = $db->getData('TheThuVien' , 'MaTTV' , $id);
+        while($row = $result->fetch()){
+            return new TheThuVien($row['MaTTV'], $row['ThoiHan']);
+        }
+        return null;
     }
     public function addTTV() {
         $db = Database::getInstance();
