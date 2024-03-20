@@ -14,6 +14,9 @@ class TheLoaiController {
             case 'edit':
                 $this->edit();
                 break;
+            case 'delete':
+                $this->delete();
+                break;
             default:
                 $this->index();
                 break;
@@ -68,42 +71,63 @@ class TheLoaiController {
         $erorr_name = "";
         if (isset($_GET["id"])) {
             $data = TheLoai::getTLbyID(intval($_GET["id"]));
+
+            if (isset($_POST["edit_theloai"])) {
+                $id =$_POST["MaTL"];
+                $tl =$_POST["TenTL"];
+    
+                if ($tl == ""){
+                    $erorr_taikhoan = "Vui lòng nhập tên thể loại";
+                    $content = "Views/TheLoai/edit.php";
+                    include "Views/Shared/HomeView/layout.php";
+                } else if (strlen($tl) < 6) {
+                    $erorr_taikhoan = "Vui lòng nhập tên thể loại tối thiểu 6 ký tự";
+                    $content = "Views/TheLoai/edit.php";
+                    include "Views/Shared/HomeView/layout.php";
+                } else {
+                    $theloai = new TheLoai($id,$tl);
+                    $result = $theloai->editTheLoai();
+                    if($result < 0){
+                        $erorr = "Thêm thể loại không thành công";
+                        $content = "Views/TaiKhoan/edit.php";
+                        include "Views/Shared/HomeView/layout.php";
+                    } else {
+                        header("location:index.php?controller=theloai&action=index");
+                    }
+                } 
+                
+            } else {
+                $content = "Views/TheLoai/edit.php";
+                include "Views/Shared/HomeView/layout.php";
+            }
         } else {
             echo "404 not found";
         }
 
         
 
-        if (isset($_POST["add_theloai"])) {
-            $tl =$_POST["TenTL"];
-
-            if ($tl == ""){
-                $erorr_taikhoan = "Vui lòng nhập tên thể loại";
-                $content = "Views/TheLoai/add.php";
-                include "Views/Shared/HomeView/layout.php";
-            } else if (strlen($tl) < 6) {
-                $erorr_taikhoan = "Vui lòng nhập tên thể loại tối thiểu 6 ký tự";
-                $content = "Views/TheLoai/add.php";
-                include "Views/Shared/HomeView/layout.php";
-            } else {
-                $theloai = new TheLoai("",$tl);
-                $result = $theloai->addTheLoai();
-                if($result < 0){
-                    $erorr = "Thêm thể loại không thành công";
-                    $content = "Views/TaiKhoan/add.php";
-                    include "Views/Shared/HomeView/layout.php";
-                } else {
-                    header("location:index.php?controller=theloai&action=index");
-                }
-            } 
-            
-        } else {
-            $content = "Views/TheLoai/add.php";
-            include "Views/Shared/HomeView/layout.php";
-        }
+        
     }
 
     private function delete() {
+        if (isset($_GET["id"])){
+            $id = $_GET["id"];
+            $theloai = TheLoai::getTLbyID($id);
+            if($theloai){
+                $result = $theloai->deleteTheLoai();
+                if ($result >= 0){
+                    header("location:index.php?controller=theloai&action=index");
+                } else {
+                    
+                }
+            } else {
+                
+            }
+        } else {}
+        
+    }
+
+    private function detail() {
 
     }
 

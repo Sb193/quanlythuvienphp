@@ -14,7 +14,7 @@
                     <div class="card-body">
                         <span class="text-danger"><?php echo $erorr ?></span>
                         <!--Start form-->
-                        <input hidden type="text" name="TenTL" id="" class="form-control" value="<?php echo $data->getMaTL();?>">
+                        <input hidden type="text" name="MaTL" id="" class="form-control" value="<?php echo $data->getMaTL();?>">
 
                         <div class="form-group">
                             <label for="taikhoan" class="control-label col-md-12">Tên thể loại</label>
@@ -32,11 +32,11 @@
                         <!--End Form-->
                         <div class="form-group d-flex align-items-center">
                             <div class="col-md-offset-2 col-md-5 text-right">
-                                <input type="submit" name="add_theloai" value="Thêm" class="btn btn-primary pl-3 pr-3" />
+                                <input type="submit" name="edit_theloai" value="Cập nhật" class="btn btn-primary pl-3 pr-3" />
                             </div>
 
                             <div class="col-md-offset-2 col-md-5 ">
-                                <a href="index?controller=taikhoan&action=index" class="btn btn-default h4 pl-3 pr-3">Trở lại</a>
+                                <a href="index?controller=theloai&action=index" class="btn btn-default h4 pl-3 pr-3">Trở lại</a>
                             </div>
                         </div>
 

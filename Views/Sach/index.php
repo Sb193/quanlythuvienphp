@@ -26,13 +26,15 @@
             foreach ($data as $book){    
         ?>
         <tr>
-            <td><?php echo $user->getTaiKhoan();?></td>
-            <td><?php echo $user->getMatKhau();?></td>
-            <td><?php echo $user->getLoaitk();?></td>
+            <td><?php echo $book->getTenDS();?></td>
+            <td><?php echo $book->getTenTG();?></td>
+            <td><?php echo $book->getTheLoai()->getTenTL();?></td>
+            <td><?php echo $book->getSoLuong();?></td>
             
             <td>
-                <a class="btn btn-primary" href="index.php?controller=taikhoan&action=edit&id=<?php echo $user->getTaiKhoan();?>">Sửa</a>
-                <button class="xoa btn btn-danger" data-id="<?php echo $user->getTaiKhoan();?>">Xóa</button>
+                <a class="btn btn-success" href="index.php?controller=sach&action=detail&id=<?php echo $book->getMaDS();?>">Xem</a>
+                <a class="btn btn-primary" href="index.php?controller=sach&action=edit&id=<?php echo $book->getMaDS();?>">Sửa</a>
+                <button class="xoa btn btn-danger" data-id="<?php echo $book->getMaDS();?>">Xóa</button>
             </td>
         </tr>
         <?php } ?>
@@ -58,7 +60,7 @@
                     cancelButtonText: 'Hủy'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = "index.php?controller=taikhoan&action=delete&id=" + idNguoiDung;
+                        window.location.href = "index.php?controller=sach&action=delete&id=" + idNguoiDung;
                     }
                 });
             });

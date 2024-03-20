@@ -48,21 +48,75 @@
         }
 
         public static function getSachs($MaDS){
-
+            $db = Database::getInstance();
+            $table = "Sach";
+            $field = "MaDS";
+            $result = $db->getData($table , $field , $MaDS);
+            $sachs = [];
+            while($row = $result->fetch()){
+                $sachs[] = new Sach($row['MaSach'] , $row['MaDS'] , $row['TrangThai']);
+            }
+            return $sachs;
         }
 
         public static function getDS($MaDS){
             $db = Database::getInstance();
-            $sql = "";
+            $sql = "SELECT * FROM `dausach`,`theloai` WHERE dausach.MaTL = theloai.MaTL AND dausach.MaDS = '$MaDS'";
 
-            // $result = $db->getData($table, $field, $MaDS);
-            // while($row = $result->fetch()){
-            //     return new DauSach($row['MaDS'] , $row['TenDS'] , $row['SoLuong'] , $row['TenTG'] , $row[''])
-            // }
+            $result = $db->getDatas($sql);
+            while($row = $result->fetch()){
+                return new DauSach($row['MaDS'] , $row['TenDS'] , $row['SoLuong'] , $row['TenTG'] , new TheLoai( $row['MaTL'] , $row['TenTL']));
+            }
+            return null;
+        }
+
+        public static function getDSs(){
+            $db = Database::getInstance();
+            $sql = "SELECT * FROM `dausach`,`theloai` WHERE dausach.MaTL = theloai.MaTL";
+
+            $result = $db->getDatas($sql);
+            $sds = [];
+            while($row = $result->fetch()){
+                $sds[] = new DauSach($row['MaDS'] , $row['TenDS'] , $row['SoLuong'] , $row['TenTG'] , new TheLoai( $row['MaTL'] , $row['TenTL']));
+            }
+            return $sds;
+        }
+
+        public function addDauSach(){
+            $db = Database::getInstance();
+            $table = "DauSach";
+            $data = array(
+                "TenDS"=>$this->TenDS,
+                "SoLuong"=> 0,
+                "TenTG" => $this->TenTG,
+                "MaTL" => $this->TheLoai->getMaTL()
+            );
+            return $db->insert_data($table, $data);
+        }
+
+        public function editDauSach(){
+            $db = Database::getInstance();
+            $table = "DauSach";
+            $data = array(
+                "TenDS"=>$this->TenDS,
+                "TenTG" => $this->TenTG,
+                "MaTL" => $this->TheLoai->getMaTL()
+            );
+            $where = "MaDS = $this->MaDS";
+            return $db->update_data($table, $data , $where);
         }
 
         public function deleteDauSach(){
+            $db = Database::getInstance();
+            $sachs = DauSach::getSachs($this->MaDS);
+            foreach($sachs as $sach){
+                $sach->deleteSach();
+            }
 
+            $table = "DauSach";
+            $where = "MaDS = '$this->MaDS'";
+
+            return $db->delete_data( $table , $where);
         }
 
     }

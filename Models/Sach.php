@@ -40,65 +40,21 @@ class Sach {
         while($row = $result->fetch()){
             return new Sach($row['MaSach'],$row['MaDS'],$row['TrangThai']);
         }
-    }
-    
-    
-    public static function getAllUser() {
-        $db = Database::getInstance();
-        $result = $db->getData('TaiKhoan');
-        $users = [];
-
-        while ($row = $result->fetch()) {
-            $users[] = new TaiKhoan($row['TaiKhoan'], $row['MatKhau'], $row['LoaiTK']);
-        }
-
-        return $users;
-    }
-
-    public static function getUserbyID($TaiKhoan) {
-        $user = $_SESSION['user'];
-        if ($user == null) {
-            return null;
-        } else if ($user->getLoaitk() == '1') {
-            return $user;
-        }
-        $db = Database::getInstance();
-        $result = $db->getData('TaiKhoan','TaiKhoan', $TaiKhoan);
-        $users = [];
-
-        while ($row = $result->fetch()) {
-            $users[] = new TaiKhoan($row['TaiKhoan'], $row['MatKhau'], $row['LoaiTK']);
-        }
-
-        return $users;
-    }
-
-    public static function getUserByuserName($TaiKhoan) {
-        $db = Database::getInstance();
-        $result = $db->getData('TaiKhoan','TaiKhoan', $TaiKhoan);
-
-
-        while ($row = $result->fetch()) {
-            return new TaiKhoan($row['TaiKhoan'], $row['MatKhau'], $row['LoaiTK']);
-        }
-
         return null;
     }
     
-    public function addTaiKhoan(){
-        if (!$this->isValidUsername($this->taikhoan)) {
-            return -10;
-        }
+    
+    public function addSach(){
         $db = Database::getInstance();
 
         // Tên của bảng
-        $table = "TaiKhoan";
+        $table = "Sach";
 
         // Mảng dữ liệu
         $data = array(
-            "TaiKhoan" => $this->taikhoan,
-            "MatKhau" => $this->matkhau,
-            "LoaiTK" => $this->loaitk
+            "MaSach" => $this->MaSach,
+            "MaDS" => $this->MaDS,
+            "TrangThai" => $this->TrangThai
         );
 
         // Gọi hàm thêm dữ liệu vào bảng
@@ -109,24 +65,24 @@ class Sach {
         $db = Database::getInstance();
 
         // Tên của bảng
-        $table = "TaiKhoan";
+        $table = "Sach";
 
         // Mảng dữ liệu
         $data = array(
-            "MatKhau" => $this->matkhau,
-            "LoaiTK" => $this->loaitk
+            "MaDS" => $this->MaDS,
+            "TrangThai" => $this->TrangThai
         );
 
-        $where = "TaiKhoan = '$this->taikhoan'";
+        $where = "MaSach = '$this->MaSach'";
         // Gọi hàm thêm dữ liệu vào bảng
         return $db->update_data($table, $data, $where);
     }
 
-    public function deleteTaiKhoan(){
+    public function deleteSach(){
         $db = Database::getInstance();
         
-        $table = "TaiKhoan";
-        $where = "TaiKhoan = '$this->taikhoan'";
+        $table = "Sach";
+        $where = "MaSach = '$this->MaSach'";
 
         return $db->delete_data($table, $where);
     }

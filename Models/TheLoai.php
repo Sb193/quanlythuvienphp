@@ -45,7 +45,7 @@ class TheLoai {
         $result = $db->getData('TheLoai','MaTL', $id);
 
         while ($row = $result->fetch()) {
-            return new TaiKhoan($row['TaiKhoan'], $row['MatKhau'], $row['LoaiTK']);
+            return new TheLoai($row['MaTL'], $row['TenTL']);
         }
 
         return null;
@@ -102,15 +102,14 @@ class TheLoai {
 
         $dausachs = TheLoai::getDauSach($this->MaTL);
         foreach ($dausachs as $ds){
-            var_dump($ds);
             $ds->deleteDauSach();
         }
 
         
         $table = "TheLoai";
-        $where = "TaiKhoan = '$this->MaTL'";
+        $where = "MaTL = '$this->MaTL'";
 
-        //return $db->delete_data($table, $where);
+        return $db->delete_data($table, $where);
     }
 
 }

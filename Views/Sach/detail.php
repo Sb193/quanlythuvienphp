@@ -47,28 +47,7 @@
                             </div>
                         </div>
 
-                        
-
-                        
-                        
-
-                        <!--End Form-->
-                        <div class="form-group d-flex align-items-center">
-                            <div class="col-md-offset-2 col-md-5 text-right">
-                                <input type="submit" name="edit_sach" value="Cập nhật" class="btn btn-primary pl-3 pr-3" />
-                            </div>
-
-                            <div class="col-md-offset-2 col-md-5 ">
-                                <a href="index?controller=sach&action=index" class="btn btn-default h4 pl-3 pr-3">Trở lại</a>
-                            </div>
-                        </div>
-
-
                     </div>
-
-
-
-
 
                 </div>
             </form>

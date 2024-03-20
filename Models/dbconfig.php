@@ -73,6 +73,7 @@ class Database {
       
         // Tạo câu truy vấn SQL để thêm dữ liệu vào bảng
         $sql = "INSERT INTO $table ($fields) VALUES ($values)";
+        
       
         // Chuẩn bị câu truy vấn
         $stmt = $this->prepare($sql);
