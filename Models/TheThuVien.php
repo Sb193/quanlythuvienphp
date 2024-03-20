@@ -20,6 +20,14 @@ class TheThuVien
     public function setThoiHan($ThoiHan) {
         $this->ThoiHan = $ThoiHan;
     }
+    public static function getTTVbyID($MaTTV){
+        $db = Database::getInstance();
+        $result = $db->getData('Nguoi','MaNguoi',$MaTTV);
+        while($row = $result->fetch())
+            return new TheThuVien($row['MaTTV'], $row['ThoiHan']);
+
+            return null;
+    }
     public static function getTTVnew(){
         $db = Database::getInstance();
         $result = $db->getData('TheThuVien');
@@ -54,6 +62,14 @@ class TheThuVien
 
         // Gọi hàm thêm dữ liệu vào bảng
         return $db->insert_data($table, $data);
+    }
+    public function deleteTTV() {
+        $db = Database::getInstance();
+        
+        $table = "TheThuVien";
+        $where = "MaTTV = '$this->MaTTV'";
+
+        return $db->delete_data($table, $where);
     }
 }
 ?>
