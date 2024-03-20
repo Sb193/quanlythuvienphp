@@ -45,12 +45,12 @@ class DocGia extends Nguoi
     }
     public static function getDocGiaById($id) {
         $docgia = null;
-        $sql = "SELECT docgia.MaDG, docgia.LoaiDG, docgia.MaTTV, nguoi.HoTen, nguoi.NgaySinh, nguoi.DiaChi, nguoi.Sdt FROM docgia, nguoi WHERE docgia.MaNguoi = nguoi.MaNguoi AND docgia.MaDG = '$id';";
+        $sql = "SELECT docgia.MaDG, docgia.LoaiDG, docgia.MaTTV, nguoi.MaNguoi, nguoi.HoTen, nguoi.NgaySinh, nguoi.DiaChi, nguoi.Sdt FROM docgia, nguoi WHERE docgia.MaNguoi = nguoi.MaNguoi AND docgia.MaDG = '$id';";
         $db = Database::getInstance();
         $stmt = $db->prepare($sql);
         $stmt->execute();
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            $docgia = new DocGia($row['MaDG'], $row['MaTTV'], $row['HoTen'],$row['NgaySinh'],$row['DiaChi'],$row['Sdt']);
+            $docgia = new DocGia($row['MaDG'], $row['LoaiDG'], $row['MaTTV'], $row['MaNguoi'],$row['HoTen'],$row['NgaySinh'],$row['DiaChi'],$row['Sdt']);
         }
         return $docgia;
     }
@@ -61,11 +61,15 @@ class DocGia extends Nguoi
         $nguoi = new Nguoi($this->getMaNguoi(),$this->getHoTen(), $this->getNgaySinh(), $this->getDiaChi(),$this->getSdt());
         $nguoi->addNguoi();
         $nguoinew = $nguoi->getNguoinew();
-        
-        $ttv = new TheThuVien($this->MaTTV, date("Y-m-d", time()));
+        $currentDate = new DateTime();
+        if ($this->LoaiDG == 1)
+            $currentDate->modify('+90 days');
+        else
+            $currentDate->modify('60 days');
+        $futureDate = $currentDate->format('Y-m-d');
+        $ttv = new TheThuVien($this->MaTTV, $futureDate);
         $ttv->addTTV();
         $ttvnew = $ttv->getTTVnew();
-        var_dump($ttvnew);
         // Mảng dữ liệu
         $data = array(
             "MaTTV"     =>  $ttvnew->getMaTTV(),
@@ -75,6 +79,32 @@ class DocGia extends Nguoi
 
         // Gọi hàm thêm dữ liệu vào bảng
         return $db->insert_data($table, $data);
+    }
+    public function editDocGia() {
+        $docgia = DocGia::getDocGiaById($this->MaDG);
+        if($docgia){
+            $this->editNguoi();
+            
+        }        
+    }
+    public function deleteDocGia(){
+        $db = Database::getInstance();
+        $docgia = DocGia::getDocGiaById($this->MaDG);
+        if ($docgia){
+            $table = "DocGia";
+            $where = "MaDG = '$this->MaDG'";
+            $result = $db->delete_data($table, $where);
+            if($result < 0){
+                if($this->deleteNguoi() < 0){
+                    $thethuvien = TheThuVien::getTTVbyID($this->MaTTV);
+                    if ($thethuvien->deleteTTV() >= 0){
+                        return 1;
+                    } else return -1;
+                } else return -2;
+            } else return -3;
+            
+        }
+        return 0;
     }
 }
 ?>

@@ -12,24 +12,31 @@
                     <div class="card-body">
                         <span class="text-danger"><?php echo $erorr ?></span>
                         <!--Start form-->
+                        <div class="form-group" hidden>
+                            <label for="loaidg" class="control-label col-md-12">Mã độc giả</label>
+                            <div class="col-md-12">
+                                <input type="text" name="loaidg" id="" class="form-control" value="<?php echo $docgia->getMaDG(); ?>">
+                                <span class="text-danger"><?php echo $erorr_loaidg ?></span>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="loaidg" class="control-label col-md-12">Loại độc giả</label>
                             <div class="col-md-12">
-                                <input type="text" name="loaidg" id="" class="form-control">
+                                <input type="text" name="loaidg" id="" class="form-control" value="<?php echo $docgia->getLoaiDG(); ?>">
                                 <span class="text-danger"><?php echo $erorr_loaidg ?></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="mattv" class="control-label col-md-12">Mã thẻ thư viện</label>
                             <div class="col-md-12">
-                                <input type="text" name="mattv" id="" class="form-control">
+                                <input type="text" name="mattv" id="" class="form-control" value="<?php echo $docgia->getMaTTV(); ?>">
                                 <span class="text-danger"><?php echo $erorr_mattv ?></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="hoten" class="control-label col-md-12">Họ tên</label>
                             <div class="col-md-12">
-                                <input type="text" name="hoten" id="" class="form-control">
+                                <input type="text" name="hoten" id="" class="form-control" value="<?php echo $docgia->getHoTen(); ?>">
                                 <span class="text-danger"><?php echo $erorr_hoten ?></span>
                             </div>
                         </div>
@@ -39,7 +46,7 @@
                             <div class="col-md-5">
                                 <label for="ngaysinh" class="control-label col-md-12">Ngày sinh</label>
                                 <div class="col-md-12">
-                                    <input type="date" name="ngaysinh" id="" class="form-control">
+                                    <input type="date" name="ngaysinh" id="" class="form-control" value="<?php echo $docgia->getNgaySinh(); ?>">
                                     <span class="text-danger"><?php echo $erorr_ngaysinh ?></span>
                                 </div>
                             </div>
@@ -47,7 +54,7 @@
                             <div class="col-md-7">
                                 <label for="sdt" class="control-label col-md-12">Số điện thoại</label>
                                 <div class="col-md-12">
-                                    <input type="text" name="sdt" id="" class="form-control">
+                                    <input type="text" name="sdt" id="" class="form-control" value="<?php echo $docgia->getSdt(); ?>">
                                     <span class="text-danger"><?php echo $erorr_sdt ?></span>
                                 </div>
                             </div>                            
@@ -56,14 +63,14 @@
                         <div class="form-group">
                             <label for="diachi" class="control-label col-md-12">Địa chỉ</label>
                             <div class="col-md-12">
-                                <input type="text" name="diachi" id="" class="form-control">
+                                <input type="text" name="diachi" id="" class="form-control" value="<?php echo $docgia->getDiaChi(); ?>">
                                 <span class="text-danger"><?php echo $erorr_diachi ?></span>
                             </div>
                         </div>
                         <!--End Form-->
                         <div class="form-group d-flex align-items-center">
                             <div class="col-md-offset-2 col-md-5 text-right">
-                                <input type="submit" name="add_docgia" value="Thêm" class="btn btn-primary pl-3 pr-3" />
+                                <input type="submit" name="edit_docgia" value="Thêm" class="btn btn-primary pl-3 pr-3" />
                             </div>
 
                             <div class="col-md-offset-2 col-md-5 ">
