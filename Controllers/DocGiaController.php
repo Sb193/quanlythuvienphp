@@ -40,7 +40,6 @@ class DocGiaController {
         $erorr_diachi ="";
         $erorr_sdt ="";
         if (isset($_POST["add_docgia"])) {
-            $madg = $_POST["madg"];
             $loaidg = $_POST["loaidg"];
             $mattv = $_POST["mattv"];
             $hoten =$_POST["hoten"];

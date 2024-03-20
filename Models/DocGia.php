@@ -61,12 +61,13 @@ class DocGia extends Nguoi
         $nguoi = new Nguoi($this->getMaNguoi(),$this->getHoTen(), $this->getNgaySinh(), $this->getDiaChi(),$this->getSdt());
         $nguoi->addNguoi();
         $nguoinew = $nguoi->getNguoinew();
-        var_dump($nguoinew);
-        $ttv = new TheThuVien($this->MaTTV, null);
+        
+        $ttv = new TheThuVien($this->MaTTV, date("Y-m-d", time()));
+        $ttv->addTTV();
         $ttvnew = $ttv->getTTVnew();
+        var_dump($ttvnew);
         // Mảng dữ liệu
         $data = array(
-            "MaDG"      =>  $this->MaDG,
             "MaTTV"     =>  $ttvnew->getMaTTV(),
             "LoaiDG"    =>  $this->LoaiDG,
             "MaNguoi"   =>  $nguoinew->getMaNguoi(),

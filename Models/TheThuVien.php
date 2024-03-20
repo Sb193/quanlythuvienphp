@@ -37,8 +37,8 @@ class TheThuVien
 
         // Mảng dữ liệu
         $data = array(
-            "MaDG"      => 01,
-            "ThoiHan"   => null
+            "MaTTV"      => $this->MaTTV,
+            "ThoiHan"   => $this->ThoiHan,
         );
 
         // Gọi hàm thêm dữ liệu vào bảng
