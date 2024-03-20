@@ -1,6 +1,7 @@
 <?php
 require_once 'Models/dbconfig.php';
-require_once("Models/Nguoi.php");
+require_once ("Models/Nguoi.php");
+require_once ("Models/TheThuVien.php");
 
 class DocGia extends Nguoi
 {
@@ -58,12 +59,17 @@ class DocGia extends Nguoi
         // Tên của bảng
         $table = "DocGia";
         $nguoi = new Nguoi($this->getMaNguoi(),$this->getHoTen(), $this->getNgaySinh(), $this->getDiaChi(),$this->getSdt());
+        $nguoi->addNguoi();
+        $nguoinew = $nguoi->getNguoinew();
+        var_dump($nguoinew);
+        $ttv = new TheThuVien($this->MaTTV, null);
+        $ttvnew = $ttv->getTTVnew();
         // Mảng dữ liệu
         $data = array(
             "MaDG"      =>  $this->MaDG,
-            "MaTTV"     =>  $this->MaTTV,
+            "MaTTV"     =>  $ttvnew->getMaTTV(),
             "LoaiDG"    =>  $this->LoaiDG,
-            "MaNguoi"   =>  $this->MaNguoi
+            "MaNguoi"   =>  $nguoinew->getMaNguoi(),
         );
 
         // Gọi hàm thêm dữ liệu vào bảng
