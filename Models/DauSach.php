@@ -106,6 +106,16 @@
             return $db->update_data($table, $data , $where);
         }
 
+        public function updateDauSach(){
+            $db = Database::getInstance();
+            $table = "DauSach";
+            $data = array(
+                "SoLuong"=>$this->SoLuong,
+            );
+            $where = "MaDS = $this->MaDS";
+            return $db->update_data($table, $data , $where);
+        }
+
         public function deleteDauSach(){
             $db = Database::getInstance();
             $sachs = DauSach::getSachs($this->MaDS);

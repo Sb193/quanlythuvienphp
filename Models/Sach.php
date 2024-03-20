@@ -57,11 +57,20 @@ class Sach {
             "TrangThai" => $this->TrangThai
         );
 
+        $result = $db->insert_data($table, $data);
+        if($result > 0){
+            $dausach = DauSach::getDS($this->MaDS);
+            $dausach->setSoLuong($dausach->getSoLuong() + 1);
+            $r = $dausach->updateDauSach();
+        } else {
+            return 0;
+        }
+
         // Gọi hàm thêm dữ liệu vào bảng
-        return $db->insert_data($table, $data);
+        return $r;
     }
 
-    public function editTaiKhoan(){
+    public function editSach(){
         $db = Database::getInstance();
 
         // Tên của bảng

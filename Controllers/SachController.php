@@ -18,6 +18,12 @@ class SachController {
             case 'delete':
                 $this->delete();
                 break;
+            case 'detail':
+                $this->detail();
+                break;
+            case 'addbook':
+                $this->addbook();
+                break;
             default:
                 $this->index();
                 break;
@@ -141,13 +147,50 @@ class SachController {
         } else {}
     }
 
-    private function details(){
+    private function detail(){
         if (isset($_GET["id"])){
             $id = $_GET["id"];
             $dausach = DauSach::getDS($id);
             if($dausach){
                 $sachs = DauSach::getSachs($id);
+                $content = "Views/Sach/detail.php";
+                include "Views/Shared/HomeView/layout.php";
+            }
+        }
+    }
+
+    private function addbook(){
+        if (isset($_GET["id"])){
+            $id = $_GET["id"];
+            $dausach = DauSach::getDS($id);
+            $erorr = "";
+            $erorr_masach = "";
+            $erorr_trangthai = "";
+
+            if (isset($_POST["add_sach"])) {
+                $MaSach =$_POST["MaSach"];
+                $MaDS = $_POST["MaDS"];
+                $TrangThai = $_POST["TrangThai"];
+
+                if ($MaSach == ""){
+                    $erorr_masach = "Vui lòng nhập mã sách";
+                    $content = "Views/Sach/addbook.php";
+                    include "Views/Shared/HomeView/layout.php";
+                } else {
+                    $sach = new Sach($MaSach , $MaDS ,$TrangThai);
+                    $result = $sach->addSach();
+                    if($result < 0){
+                        $erorr = "Thêm sách không thành công";
+                        $content = "Views/Sach/addbook.php";
+                        include "Views/Shared/HomeView/layout.php";
+                    } else {
+                        header("location:index.php?controller=sach&action=detail&id=$MaDS");
+                    }
+                } 
                 
+            } else {
+                $content = "Views/Sach/addbook.php";
+                include "Views/Shared/HomeView/layout.php";
             }
         }
     }
