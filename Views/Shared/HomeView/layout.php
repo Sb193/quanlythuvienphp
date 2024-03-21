@@ -98,10 +98,9 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Chức năng</h6>
-                        <a class="collapse-item" href="login.html">Danh sách phiếu mượn</a>
-                        <a class="collapse-item" href="register.html">Thêm phiếu mượn</a>
-                        <a class="collapse-item" href="forgot-password.html">Thêm phiếu phạt</a>
-                        <a class="collapse-item" href="404.html">Cập nhật trả</a>
+                        <a class="collapse-item" href="index.php?controller=thongkesach&action=index">Thống kê sách</a>
+                        <a class="collapse-item" href="index.php?controller=thongkesach&action=docgia">Thống kê độc giả</a>
+                        <a class="collapse-item" href="index.php?controller=thongkesach&action=muontra">Thống kê mượn trả</a>
                     </div>
                 </div>
             </li>
@@ -212,7 +211,7 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Nhân viên: Son Bac</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Nhân viên: <?php echo $_SESSION['user']['TaiKhoan']?></span>
                                 <img class="img-profile rounded-circle"
                                     src="asset/img/undraw_profile.svg">
                             </a>

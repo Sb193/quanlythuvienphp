@@ -15,7 +15,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Số lượng sách</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">100</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $slSach?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fa-solid fa-book fa-2x text-gray-300"></i>
@@ -34,7 +34,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Số lượng độc giả</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">15</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $slDG?></div>
                                         </div>
                                         <div class="col-auto">
                                             
@@ -55,7 +55,7 @@
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">5</div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php echo $slDM?></div>
                                                 </div>
                                                 
                                             </div>
@@ -76,7 +76,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Quá hạn</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">1</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $slQH?></div>
                                         </div>
                                         <div class="col-auto">
                                             
@@ -129,7 +129,9 @@
                                         <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
                                             src="asset/img/undraw_posting_photo.svg" alt="...">
                                     </div>
-                                    <p>Hệ thống thư viện được xây dựng nhằm đảm bảo dữ liệu được laksdhfoiaweofaskdjvhkjashdofjoawekjflaksdflkjasdlfjalsdkfjoaiwejfojasdlfkjalwkejfoiasjd  </p>
+                                    <p>Hệ thống thư viện được xây dựng nhằm đảm bảo dữ liệu được lưu trữ một cách đồng bộ hỗ trợ cán bộ nhân viên trường trong quá trình quản lý thư viện của trường.</br>
+                                        Sản phẩm quản lý thư viện trường THPT Phú Bình được phát triển bởi Nhóm 5
+                                </p>
                                     
                                 </div>
                             </div>

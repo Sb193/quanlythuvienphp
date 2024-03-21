@@ -14,11 +14,11 @@
         public static function getPPbyPM($MaPM) {
             $db = Database::getInstance();
             $result = $db->getData("PhieuPhat","MaPM" , $MaPM);
-            $pp = [];
+            
             while ($row = $result->fetch()){
-                $pp[] = new PhieuPhat($row['MaPP'] , $row['MaPM'] , $row["LyDo"]);
+                return new PhieuPhat($row['MaPP'] , $row['MaPM'] , $row["LyDo"]);
             }
-            return $pp;
+            return null;
         }
 
         public function addPhieuPhat() {

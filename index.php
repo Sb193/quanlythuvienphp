@@ -12,6 +12,7 @@ require_once 'controllers/TaiKhoanController.php';
 require_once 'controllers/DocGiaController.php';
 require_once 'controllers/TheLoaiController.php';
 require_once 'controllers/PhieuMuonController.php';
+require_once 'controllers/ThongkeController.php';
 
 
 
@@ -33,11 +34,22 @@ if (!isset($_SESSION['user'])) {
                 $controller = new SachController();
                 break;
             case 'nhanvien':
-                $controller = new NhanVienController();
-                break;
+                if ($user['LoaiTK'] != "1"){
+                    $controller = new LoginController();
+                    break;
+                } else {
+                    $controller = new NhanVienController();
+                    break;
+                }
             case 'taikhoan':
-                $controller = new TaiKhoanController();
-                break;
+                if ($user['LoaiTK'] != "1"){
+                    $controller = new LoginController();
+                    break;
+                } else {
+                    $controller = new TaiKhoanController();
+                    break;
+                }
+                
             case 'docgia':
                 $controller = new DocGiaController();
                 break;
@@ -46,6 +58,9 @@ if (!isset($_SESSION['user'])) {
                 break;
             case 'phieumuon':
                 $controller = new PhieuMuonController();
+                break;
+            case 'thongkesach':
+                $controller = new ThongKeController();
                 break;
             default:
                 $controller = new HomeController();

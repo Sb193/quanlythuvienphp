@@ -1,5 +1,6 @@
 <?php
 require_once 'Models/TaiKhoan.php';
+require_once 'Models/NhanVien.php';
 
 class LoginController {
     public function handleRequest() {
@@ -23,9 +24,10 @@ class LoginController {
             $username = $_POST['username'];
             $password = $_POST['password'];
 
-            $user = TaiKhoan::getByUsernameAndPassword($username, $password);
+            $user = TaiKhoan::Login($username, $password);
             if ($user) {
                 $_SESSION['user'] = $user;
+                
                 
                 header("location:index.php?controller=home&action=index");
             } else {

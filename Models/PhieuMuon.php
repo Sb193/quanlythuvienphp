@@ -2,6 +2,7 @@
     require_once "Models/dbconfig.php";
     require_once "Models/ChiTietPhieuMuon.php";
     require_once "Models/NhanVien.php";
+	require_once "Models/PhieuPhat.php";
     class PhieuMuon{
         private $MaPM;
 	    private $MaTTV;
@@ -219,6 +220,28 @@
 
 	public function painPhieuMuon(){
 		$this->TrangThai = "Đã hoàn thành";
+		$result =  $this->updatePhieuMuon();
+		if ($result > 0){
+			$ct = $this->getCTPM();
+
+			foreach ($ct as $pm) {
+				$sach = Sach::getSachbyID($pm->getMaSach());
+				if ($sach) {
+					$sach->painSach();
+				}
+			}
+		}
+	}
+
+	public function createPP(){
+		$phieuphat = PhieuPhat::getPPbyPM($this->MaPM);
+		if ($phieuphat) {
+			$this->TrangThai = "Đã phạt Lý do: $phieuphat->LyDo";
+		} else {
+			return;
+		}
+		
+		
 		$result =  $this->updatePhieuMuon();
 		if ($result > 0){
 			$ct = $this->getCTPM();

@@ -102,6 +102,12 @@ class NhanVien extends Nguoi{
         
     }
 
+    public static function getNhanVienbyUser($username){
+        $db = Database::getInstance();
+        $sql = "SELECT * FROM NhanVien , Nguoi WHERE nhanvien.MaNguoi = nguoi.MaNguoi AND nhanvien.TaiKhoan = '$username'";
+        return $db->getDatas($sql);
+    }
+
     public function deleteNhanVien(){
         $db = Database::getInstance();
         $nhanvien = NhanVien::getNhanVienbyID($this->MaNV);

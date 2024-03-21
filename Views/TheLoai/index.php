@@ -25,7 +25,7 @@
             <td><?php echo $cate->getTenTL();?></td>
             
             <td>
-                <a class="btn btn-success" href="index.php?controller=theloai&action=detail&id=<?php echo $cate->getMaTL();?>">Xem</a>
+                
                 <a class="btn btn-primary" href="index.php?controller=theloai&action=edit&id=<?php echo $cate->getMaTL();?>">Sửa</a>
                 <button class="xoa btn btn-danger" data-id="<?php echo $cate->getMaTL();?>">Xóa</button>
             </td>

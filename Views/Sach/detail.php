@@ -1,8 +1,8 @@
 
 
 
-
-    <div class="dl-horizontal">
+<div class="d-flex justify-content-center">
+    <div class="dl-horizontal col-md-8">
         <div class="card shadow mb-6 ">
             <form action="" method="post">
                 <div class="form-horizontal">
@@ -91,7 +91,7 @@
 
                         </div>
 
-                        </div>
+                        
 
                     </div>
                 </form>
@@ -132,6 +132,6 @@
 
     </div>
     <script src="https://kit.fontawesome.com/d69cbc9d77.js" crossorigin="anonymous"></script>
-
+</div>
 
 

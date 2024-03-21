@@ -27,6 +27,12 @@ class PhieuMuonController {
             case 'update':
                 $this->update();
                 break;
+            case 'createPP':
+                $this->createPP();
+                break;
+            case 'details':
+                $this->details();
+                break;
             default:
                 $this->index();
                 break;
@@ -208,6 +214,24 @@ class PhieuMuonController {
         }
     }
 
+    private function details(){
+        if (isset($_GET["id"])){
+            $id = $_GET["id"];
+            $phieumuon = PhieuMuon::getPhieuMuonbyID($id);
+            if($phieumuon){
+                $ct = $phieumuon->getCTPM();
+                $pp = PhieuPhat::getPPbyPM($phieumuon->getMaPM());
+                $content = "Views/PhieuMuon/details.php";
+                include "Views/Shared/HomeView/layout.php";
+
+                    
+            } else {
+                
+            }
+        }
+    }
+    
+
     
 
     private function update(){
@@ -227,15 +251,23 @@ class PhieuMuonController {
 
     private function createPP(){
         if (isset($_GET["id"])){
-        $id = $_GET["id"];
-            $sach = Sach::getSachbyID($id);
-            if($sach){
-                $result = $sach->deleteSach();
-                $mads = $sach->getMaDS();
-                if ($result >= 0){
-                    header("location:index.php?controller=sach&action=detail&id=$mads");
-                } else {
+            $id = $_GET["id"];
+            $pm = PhieuMuon::getPhieuMuonbyID($id);
+            if($pm){
+                if (isset($_POST["add_pp"])){
+                    $Lydo = $_POST['lydo'];
+                
+                    $pp = new PhieuPhat("",$id,$Lydo);
                     
+                    if ($pp->addPhieuPhat() >= 0){
+                        $pm->createPP();
+                        header("location:index.php?controller=phieumuon&action=detail&id=$id");
+                    } else {
+                        
+                    }
+                }else{
+                    $content = "Views/PhieuMuon/createPP.php";
+                    include "Views/Shared/HomeView/layout.php";
                 }
             } else {
                 

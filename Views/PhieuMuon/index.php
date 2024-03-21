@@ -49,6 +49,8 @@
                 ?>
                 <button class="xoa btn btn-danger" data-id="<?php echo $pm->getMaPM();?>">Xóa</button>
                 <?php } ?>
+
+                <a class="btn btn-primary" href="index.php?controller=phieumuon&action=details&id=<?php echo $pm->getMaPM();?>">Xem</a>
             </td>
         </tr>
         <?php } ?>

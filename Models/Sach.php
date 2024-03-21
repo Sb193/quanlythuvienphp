@@ -107,6 +107,8 @@ class Sach {
         
         $table = "Sach";
         $where = "MaSach = '$this->MaSach'";
+        $sql = "DELETE TABLE ChiTietPhieuMuon WHERE $where";
+        $db->getDatas($sql);
 
         $result =  $db->delete_data($table, $where);
         if($result > 0){

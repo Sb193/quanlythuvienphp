@@ -40,6 +40,19 @@ class TaiKhoan {
             return NULL;
         }
     }
+
+    public static function Login($username, $password) {
+        $db = Database::getInstance();
+        $stmt = $db->prepare('SELECT * FROM taikhoan WHERE TaiKhoan = :username AND MatKhau = :password');
+        $stmt->execute([':username' => $username, ':password' => $password]);
+    
+        $result = $stmt->fetch();
+        if ($result){
+            return $result;
+        } else {
+            return NULL;
+        }
+    }
     
     public function getTaiKhoan(){
         return $this->taikhoan;
@@ -100,6 +113,8 @@ class TaiKhoan {
 
         return null;
     }
+
+    
     
     public function addTaiKhoan(){
         if (!$this->isValidUsername($this->taikhoan)) {
