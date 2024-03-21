@@ -54,6 +54,17 @@ class DocGia extends Nguoi
         }
         return $docgia;
     }
+
+    public static function getDocGiaByMaTTV($id){
+        $sql = "SELECT * FROM docgia, nguoi, thethuvien WHERE docgia.MaNguoi = nguoi.MaNguoi AND docgia.MaTTV = thethuvien.MaTTV AND docgia.MaTTV = '$id';";
+        $db = Database::getInstance();
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            return new DocGia($row['MaDG'], $row['LoaiDG'], $row['MaTTV'], $row['MaNguoi'],$row['HoTen'],$row['NgaySinh'],$row['DiaChi'],$row['Sdt']);
+        }
+        return null;
+    }
     public function addDocGia(){
         $db = Database::getInstance();
         // Tên của bảng
@@ -63,12 +74,16 @@ class DocGia extends Nguoi
         $nguoinew = $nguoi->getNguoinew();
         $currentDate = new DateTime();
         if ($this->LoaiDG == 1)
-            $currentDate->modify('+90 days');
+            $currentDate->modify('90 days');
         else
             $currentDate->modify('60 days');
         $futureDate = $currentDate->format('Y-m-d');
+        
         $ttv = new TheThuVien($this->MaTTV, $futureDate);
-        $ttv->addTTV();
+
+        if ($ttv->addTTV() <= 0){
+            return -10;
+        }
         $ttvnew = $ttv->getTTVnew();
         // Mảng dữ liệu
         $data = array(

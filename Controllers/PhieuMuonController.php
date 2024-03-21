@@ -24,11 +24,8 @@ class PhieuMuonController {
             case 'detail':
                 $this->detail();
                 break;
-            case 'addbook':
-                $this->addbook();
-                break;
-            case 'deletebook':
-                $this->deletebook();
+            case 'update':
+                $this->update();
                 break;
             default:
                 $this->index();
@@ -53,7 +50,7 @@ class PhieuMuonController {
         $erorr_ngaytra = "";
         
 
-        if (isset($_POST["add_sach"])) {
+        if (isset($_POST["add_phieumuon"])) {
             $MaTTV =$_POST["MaTTV"];
             $MaNV = $_POST["MaNV"];
             $NgayMuon = $_POST["NgayMuon"];
@@ -61,7 +58,7 @@ class PhieuMuonController {
             $LuaChon = $_POST["LuaChon"];
             $TrangThai = $_POST["TrangThai"];
 
-            $thethuvien = TheThuVien::getTTVbyID($MaNV);
+            $thethuvien = TheThuVien::getTTVbyID($MaTTV);
 
             if ($MaTTV == ""){
                 $erorr_mattv = "Vui lòng nhập mã thẻ thư viện";
@@ -75,19 +72,21 @@ class PhieuMuonController {
                 $erorr_mattv = "Thẻ thư viện đã hết hạn!";
                 $content = "Views/PhieuMuon/add.php";
                 include "Views/Shared/HomeView/layout.php";
-            } else if($thethuvien->getThoiHan() < date("Y-m-d",time())) {
-                $erorr_mattv = "Thẻ thư viện đã hết hạn!";
+            } else if($thethuvien->checkvar() <= 0) {
+                $erorr_mattv = "Độc giả đã mượn tối đa sách có thể mượn";
                 $content = "Views/PhieuMuon/add.php";
                 include "Views/Shared/HomeView/layout.php";
             } else {
-                $dausach = new DauSach("",$TenDS,"",$TenTG,new TheLoai($MaTL , ""));
-                $result = $dausach->addDauSach();
+                $phieumuon = new PhieuMuon("",$MaTTV, $MaNV, $NgayMuon , $NgayTra , $LuaChon ,$TrangThai);
+                $result = $phieumuon->addPhieuMuon();
                 if($result < 0){
-                    $erorr = "Thêm đầu sách không thành công";
+                    $erorr = "Thêm phiếu mượn không thành công";
                     $content = "Views/Sach/add.php";
                     include "Views/Shared/HomeView/layout.php";
                 } else {
-                    header("location:index.php?controller=phieumuon&action=add");
+                    $phieumuon = PhieuMuon::getPhieuMuonNew();
+                    $id = $phieumuon->getMaPM();
+                    header("location:index.php?controller=phieumuon&action=detail&id=$id");
                 }
             } 
             
@@ -166,52 +165,67 @@ class PhieuMuonController {
     private function detail(){
         if (isset($_GET["id"])){
             $id = $_GET["id"];
-            $dausach = DauSach::getDS($id);
-            if($dausach){
-                $sachs = DauSach::getSachs($id);
-                $content = "Views/Sach/detail.php";
-                include "Views/Shared/HomeView/layout.php";
-            }
-        }
-    }
-
-    private function addbook(){
-        if (isset($_GET["id"])){
-            $id = $_GET["id"];
-            $dausach = DauSach::getDS($id);
-            $erorr = "";
-            $erorr_masach = "";
-            $erorr_trangthai = "";
-
-            if (isset($_POST["add_sach"])) {
-                $MaSach =$_POST["MaSach"];
-                $MaDS = $_POST["MaDS"];
-                $TrangThai = $_POST["TrangThai"];
-
-                if ($MaSach == ""){
-                    $erorr_masach = "Vui lòng nhập mã sách";
-                    $content = "Views/Sach/addbook.php";
-                    include "Views/Shared/HomeView/layout.php";
-                } else {
-                    $sach = new Sach($MaSach , $MaDS ,$TrangThai);
-                    $result = $sach->addSach();
-                    if($result < 0){
-                        $erorr = "Thêm sách không thành công";
-                        $content = "Views/Sach/addbook.php";
+            $phieumuon = PhieuMuon::getPhieuMuonbyID($id);
+            if($phieumuon){
+                $ct = $phieumuon->getCTPM();
+                $error = "";
+                if (isset($_POST["add_sach"])){
+                    $phieumuon = $_POST["MaPM"];
+                    $sach = $_POST["MaSach"];
+                    $s =Sach::getSachbyID($sach);
+                    $pm = PhieuMuon::getPhieuMuonbyID($phieumuon);
+                    $ttv = TheThuVien::getTTVbyID($pm->getMaTTV());
+                    
+                    if (!$s) {
+                        $error = "Sách không tồn tại!";
+                        $content = "Views/PhieuMuon/detail.php";
+                        include "Views/Shared/HomeView/layout.php";
+                    } else if($s->getTrangThai() != 1){
+                        $error = "Sách đã được mượn ở nơi khác!";
+                        $content = "Views/PhieuMuon/detail.php";
+                        include "Views/Shared/HomeView/layout.php";
+                    } else if($ttv->checkvar() <= 0){
+                        $error = "Độc giả này đã mượn tối đa sách có thể mượn";
+                        $content = "Views/PhieuMuon/detail.php";
                         include "Views/Shared/HomeView/layout.php";
                     } else {
-                        header("location:index.php?controller=sach&action=detail&id=$MaDS");
+                        $ct = new ChiTietPhieuMuon($phieumuon , $sach);
+                        if ($ct->addCTPM() >= 0){
+                            header("location:index.php?controller=phieumuon&action=detail&id=$phieumuon");
+                        } else {
+                            $error = "Thêm thất bại!";
+                            $content = "Views/PhieuMuon/detail.php";
+                            include "Views/Shared/HomeView/layout.php";
+                        }
                     }
-                } 
-                
-            } else {
-                $content = "Views/Sach/addbook.php";
-                include "Views/Shared/HomeView/layout.php";
+
+                    
+                } else {
+                    $content = "Views/PhieuMuon/detail.php";
+                    include "Views/Shared/HomeView/layout.php";
+                }
             }
         }
     }
 
-    private function deletebook(){
+    
+
+    private function update(){
+        if (isset($_GET["id"])){
+            $id = $_GET["id"];
+            $pm = PhieuMuon::getPhieuMuonbyID($id);
+            if($pm){
+                $pm->painPhieuMuon();
+                
+                header("location:index.php?controller=phieumuon&action=index");
+                
+            } else {
+                
+            }
+        } else {}
+    }
+
+    private function createPP(){
         if (isset($_GET["id"])){
         $id = $_GET["id"];
             $sach = Sach::getSachbyID($id);

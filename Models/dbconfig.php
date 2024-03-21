@@ -83,7 +83,8 @@ class Database {
             $stmt->execute($data);
         } 
         catch (PDOException $e) {
-            return -1;
+            echo $e;
+            exit;
         }
         
       

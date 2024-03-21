@@ -7,6 +7,8 @@ class Sach {
     private $MaDS;
     public $TrangThai;
 
+    public $DauSach;
+
     public function __construct($MaSach , $MaDS , $TrangThai){
         $this->MaSach = $MaSach;
         $this->MaDS = $MaDS;
@@ -34,11 +36,13 @@ class Sach {
 
     public static function getSachbyID($masach) {
         $db = Database::getInstance();
-        $table = 'Sach';
-        $field = 'MaSach';
-        $result = $db->getData($table, $field, $masach);
+        $sql = "SELECT * FROM `sach`,`dausach` WHERE sach.MaDS = dausach.MaDS AND sach.MaSach = '$masach'";
+
+        $result = $db->getDatas($sql);
         while($row = $result->fetch()){
-            return new Sach($row['MaSach'],$row['MaDS'],$row['TrangThai']);
+            $sach = new Sach($row['MaSach'],$row['MaDS'],$row['TrangThai']);
+            $sach->DauSach = new DauSach($row['MaDS'],$row['TenDS'],$row['SoLuong'], $row['TenTG'] , $row['MaTL']);
+            return $sach;
         }
         return null;
     }
@@ -85,6 +89,16 @@ class Sach {
         $where = "MaSach = '$this->MaSach'";
         // Gọi hàm thêm dữ liệu vào bảng
         return $db->update_data($table, $data, $where);
+    }
+
+    public function painSach(){
+        $this->TrangThai = 1;
+        $this->editSach();
+    }
+
+    public function buySach(){
+        $this->TrangThai = 0;
+        $this->editSach();
     }
 
 

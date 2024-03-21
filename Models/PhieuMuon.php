@@ -134,7 +134,18 @@
         $this->TrangThai = $TrangThai;
     }
 
-    public static function getPhieuMuon() {
+    public static function getPhieuMuonNew() {
+        $db = Database::getInstance();
+        $phieumuon = null;
+        $sql = "SELECT * FROM `phieumuon` WHERE MaPM IN (SELECT Max(MaPM) AS MaPM FROM phieumuon)";
+        $result = $db->getDatas($sql);
+        while ($row = $result->fetch()) {
+            $phieumuon = new PhieuMuon($row['MaPM'] , $row['MaTTV'] ,$row['MaNV'], $row['NgayMuon'] , $row['NgayTra'] , $row['LuaChon'] , $row['TrangThai']);
+        }
+        return $phieumuon;
+    }
+
+	public static function getPhieuMuon() {
         $db = Database::getInstance();
         $phieumuon = [];
         $table = "PhieuMuon";
@@ -144,5 +155,82 @@
         }
         return $phieumuon;
     }
+
+	public static function getPhieuMuonbyID($id) {
+        $db = Database::getInstance();
+        $table = "PhieuMuon";
+		$field = "MaPM";
+        $result = $db->getData($table, $field, $id);
+        while ($row = $result->fetch()) {
+            return new PhieuMuon($row['MaPM'] , $row['MaTTV'] ,$row['MaNV'], $row['NgayMuon'] , $row['NgayTra'] , $row['LuaChon'] , $row['TrangThai']);
+        }
+        return null;
+    }
+
+	public function getCTPM() {
+		$db = Database::getInstance();
+		$table = "ChiTietPhieuMuon";
+		$field = "MaPM";
+		$result = $db->getData($table, $field,$this->MaPM);
+		$ct = [];
+		while ($row = $result->fetch()) {
+			$ct[] = new ChiTietPhieuMuon($row["MaPM"] , $row["MaSach"]);
+		}
+		return $ct;
+	}
+
+	public function addPhieuMuon(){
+		$db = Database::getInstance();
+		$table = "PhieuMuon";
+		$data = array(
+			"MaTTV"=> $this->MaTTV,
+			"MaNV"=> $this->MaNV,
+			"NgayMuon"=> $this->NgayMuon,
+			"NgayTra"=> $this->NgayTra,
+			"LuaChon"=> $this->LuaChon,
+			"TrangThai"=> $this->TrangThai
+		);
+		return $db->insert_data($table, $data);
+	}
+
+	public function updatePhieuMuon(){
+		$db = Database::getInstance();
+		$table = "PhieuMuon";
+		$data = array(
+			"MaTTV"=> $this->MaTTV,
+			"MaNV"=> $this->MaNV,
+			"NgayMuon"=> $this->NgayMuon,
+			"NgayTra"=> $this->NgayTra,
+			"LuaChon"=> $this->LuaChon,
+			"TrangThai"=> $this->TrangThai
+		);
+
+		$where = "MaPM = $this->MaPM";
+		return $db->update_data($table, $data, $where);
+	}
+
+	public function checkPhieuMuon(){
+		
+		if ($this->TrangThai == "Đang mượn" && $this->NgayTra < date("Y-m-d",time())){
+			$this->TrangThai = "Quá hạn";
+			return $this->updatePhieuMuon();
+		}
+	}
+
+	public function painPhieuMuon(){
+		$this->TrangThai = "Đã hoàn thành";
+		$result =  $this->updatePhieuMuon();
+		if ($result > 0){
+			$ct = $this->getCTPM();
+
+			foreach ($ct as $pm) {
+				$sach = Sach::getSachbyID($pm->getMaSach());
+				if ($sach) {
+					$sach->painSach();
+				}
+			}
+		}
+	}
+
 }
 ?>

@@ -60,12 +60,11 @@ class Nguoi{
 
     public static function getNguoinew(){
         $db = Database::getInstance();
-        $result = $db->getData('Nguoi');
-        $nguoi = null;
-        foreach($result as $row){
-            $nguoi = new Nguoi($row['MaNguoi'],$row['HoTen'],$row['NgaySinh'],$row['DiaChi'],$row['Sdt']);
+        $result = $db->getDatas("SELECT * FROM Nguoi WHERE MaNguoi IN (SELECT MAX(MaNguoi) AS MaNguoi FROM Nguoi)");
+        while ($row = $result->fetch()){
+            return new Nguoi($row['MaNguoi'],$row['HoTen'],$row['NgaySinh'],$row['DiaChi'],$row['Sdt']);
         }
-        return $nguoi;
+        return null;
     }
 
     public function addNguoi(){

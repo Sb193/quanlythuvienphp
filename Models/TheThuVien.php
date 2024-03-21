@@ -1,5 +1,6 @@
 <?php
 require_once "Models/dbconfig.php";
+require_once "Models/DocGia.php";
 class TheThuVien
 {
     private $MaTTV;
@@ -20,14 +21,7 @@ class TheThuVien
     public function setThoiHan($ThoiHan) {
         $this->ThoiHan = $ThoiHan;
     }
-    public static function getTTVbyID($MaTTV){
-        $db = Database::getInstance();
-        $result = $db->getData('Nguoi','MaNguoi',$MaTTV);
-        while($row = $result->fetch())
-            return new TheThuVien($row['MaTTV'], $row['ThoiHan']);
-
-            return null;
-    }
+    
     public static function getTTVnew(){
         $db = Database::getInstance();
         $result = $db->getData('TheThuVien');
@@ -38,7 +32,31 @@ class TheThuVien
         return $ttv;
     }
 
-    
+    public function getInfor(){
+        $db = Database::getInstance();
+        $sql = "SELECT COUNT(*) AS SL FROM PhieuMuon PM JOIN ChiTietPhieuMuon CT ON PM.MaPM = CT.MaPM JOIN Sach S ON CT.MaSach = S.MaSach WHERE PM.MaTTV = '$this->MaTTV' AND PM.TrangThai = 'Đang mượn'";
+        $result = $db->getDatas($sql);
+        while ($row = $result->fetch()){
+            return $row["SL"];
+        }
+        return 9999;
+    }
+
+    public function checkvar(){
+        $limited_sach = 0;
+        $docgia = DocGia::getDocGiaByMaTTV($this->MaTTV);
+        if ($docgia){
+            if ($docgia->getLoaiDG() == 1){
+                $limited_sach = 10;
+            } else {
+                $limited_sach = 7;
+            }
+
+            return $limited_sach - $this->getInfor();
+        }
+
+        return -9999;
+    }
 
     public static function getTTVbyID($id){
         $db = Database::getInstance();

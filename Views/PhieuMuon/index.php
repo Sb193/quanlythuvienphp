@@ -36,9 +36,19 @@
             <td><?php echo $pm->getTrangThai();?></td>
             
             <td>
-                <a class="btn btn-success" href="index.php?controller=sach&action=detail&id=<?php echo $pm->getMaDS();?>">Xem</a>
-                <a class="btn btn-primary" href="index.php?controller=sach&action=edit&id=<?php echo $pm->getMaDS();?>">Sửa</a>
-                <button class="xoa btn btn-danger" data-id="<?php echo $pm->getMaDS();?>">Xóa</button>
+                <?php
+                    if ($pm->getTrangThai() == "Đang mượn"){
+                ?>
+                    <a class="btn btn-success" href="index.php?controller=phieumuon&action=update&id=<?php echo $pm->getMaPM();?>">Cập nhật</a>
+                <?php
+                    } else if ($pm->getTrangThai() == "Quá hạn") {
+                ?>
+                    <a class="btn btn-danger" href="index.php?controller=phieumuon&action=createPP&id=<?php echo $pm->getMaPM();?>">Tạo phiếu phạt</a>
+                <?php
+                    } else {
+                ?>
+                <button class="xoa btn btn-danger" data-id="<?php echo $pm->getMaPM();?>">Xóa</button>
+                <?php } ?>
             </td>
         </tr>
         <?php } ?>
@@ -64,7 +74,7 @@
                     cancelButtonText: 'Hủy'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = "index.php?controller=sach&action=delete&id=" + idNguoiDung;
+                        window.location.href = "index.php?controller=phieumuon&action=delete&id=" + idNguoiDung;
                     }
                 });
             });

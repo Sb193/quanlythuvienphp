@@ -5,6 +5,7 @@
         private $MaPM;
         private $MaSach;
 
+
         public function __construct($MaPM , $MaSach) {
             $this->MaPM = $MaPM;
             $this->MaSach = $MaSach;
@@ -47,6 +48,10 @@
             $table = "ChiTietPhieuMuon";
             $where = "MaPM = '$this->MaPM' AND MaSach = '$this->MaSach'";
             return $db->delete_data($table, $where);
+        }
+
+        public function getSach() {
+            return Sach::getSachbyID($this->MaSach);
         }
     }
 ?>
