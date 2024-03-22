@@ -35,11 +35,10 @@ $.ajax({
   url: 'index.php?controller=thongkesach&action=data',
   type: 'GET',
   success: function(data) {
-      console.log(data);
+
       // Parse dữ liệu JSON
       var result = JSON.parse(data);
 
-      console.log(result)
       // In dữ liệu ra console
       thang = result.map(function(item) {
         return item.Thang;
@@ -48,9 +47,6 @@ $.ajax({
           return item.SoLuong;
       });
 
-      // In ra mảng thang và soLuong
-      console.log('Thang: ', thang);
-      console.log('SoLuong: ', soLuong);
 
 
       // Area Chart Example

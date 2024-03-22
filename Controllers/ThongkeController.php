@@ -10,11 +10,14 @@ class ThongKeController {
         $action = isset($_GET['action']) ? $_GET['action'] : null;
         switch ($action) {
             case 'index':
-                $this->index();
+                $this->thongkesach();
                 break;
             case 'data':
-                $this->data();
+                $this->datasach();
                 break;
+                case 'datapie':
+                    $this->datasachpie();
+                    break;
             case 'docgia':
                 $this->docgia();
                 break;
@@ -22,22 +25,51 @@ class ThongKeController {
                 $this->muontra();
                 break;
             default:
-                $this->index();
+                $this->thongkesach();
                 break;
         }
     }
 
-    private function index() {
-        $content = "Views/ThongKe/index.php";
+    private function thongkesach() {
+        $content = "Views/ThongKe/thongkesach.php";
         include "Views/Shared/HomeView/layout.php";
         
     }
 
-    private function data() {
+    private function datasach() {
         $db = Database::getInstance();
-        $sql = "SELECT AllMonths.Thang, IFNULL(SachMuon.SoLuongSachMuon, 0) AS SoLuongSachMuon FROM ( SELECT 1 AS Thang UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10 UNION SELECT 11 UNION SELECT 12 ) AS AllMonths LEFT JOIN ( SELECT MONTH(NgayMuon) AS Thang, COUNT(*) AS SoLuongSachMuon FROM PhieuMuon PM JOIN ChiTietPhieuMuon CT ON PM.MaPM = CT.MaPM GROUP BY MONTH(NgayMuon) ) AS SachMuon ON AllMonths.Thang = SachMuon.Thang ORDER BY AllMonths.Thang;";
+        $sql = "SELECT AllMonths.Thang, IFNULL(SachMuon.SoLuongSachMuon, 0) AS SoLuong FROM ( SELECT 1 AS Thang UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10 UNION SELECT 11 UNION SELECT 12 ) AS AllMonths LEFT JOIN ( SELECT MONTH(NgayMuon) AS Thang, COUNT(*) AS SoLuongSachMuon FROM PhieuMuon PM JOIN ChiTietPhieuMuon CT ON PM.MaPM = CT.MaPM GROUP BY MONTH(NgayMuon) ) AS SachMuon ON AllMonths.Thang = SachMuon.Thang ORDER BY AllMonths.Thang;";
         // Truy vấn dữ liệu từ cơ sở dữ liệu
-        $data = $db->getDatas($sql);
+        $result = $db->getDatas($sql);
+        $data = array();
+        while ($row = $result->fetch()) {
+
+            $thang = $row["Thang"];
+            $data[] = array(
+                "Thang"=> "Tháng $thang",
+                "SoLuong"=> $row["SoLuong"],
+            ); 
+        }
+        // Chuyển đổi dữ liệu thành định dạng JSON
+        echo json_encode($data);
+    }
+
+    private function datasachpie() {
+        $db = Database::getInstance();
+        $sql = "SELECT TrangThai, COUNT(*) AS SoLuong FROM Sach WHERE TrangThai IN (0, 1) GROUP BY TrangThai;";
+        // Truy vấn dữ liệu từ cơ sở dữ liệu
+        $result = $db->getDatas($sql);
+        $data = array();
+        while ($row = $result->fetch()) {
+            $field = "Thư viện";
+            if ($row["TrangThai"] == 0) {
+                $field = "Đang cho mượn";
+            }
+            $data[] = array(
+                "TrangThai"=> $field,
+                "SoLuong"=> $row["SoLuong"],
+            ); 
+        }
         // Chuyển đổi dữ liệu thành định dạng JSON
         echo json_encode($data);
     }
@@ -49,6 +81,24 @@ class ThongKeController {
         $data = DocGia::getData();
         include "Views/Shared/HomeView/layout.php";
         
+    }
+
+    private function datadocgia() {
+        $db = Database::getInstance();
+        $sql = "SELECT AllMonths.Thang, IFNULL(SachMuon.SoLuongSachMuon, 0) AS SoLuong FROM ( SELECT 1 AS Thang UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10 UNION SELECT 11 UNION SELECT 12 ) AS AllMonths LEFT JOIN ( SELECT MONTH(NgayMuon) AS Thang, COUNT(*) AS SoLuongSachMuon FROM PhieuMuon PM JOIN ChiTietPhieuMuon CT ON PM.MaPM = CT.MaPM GROUP BY MONTH(NgayMuon) ) AS SachMuon ON AllMonths.Thang = SachMuon.Thang ORDER BY AllMonths.Thang;";
+        // Truy vấn dữ liệu từ cơ sở dữ liệu
+        $result = $db->getDatas($sql);
+        $data = array();
+        while ($row = $result->fetch()) {
+
+            $thang = $row["Thang"];
+            $data[] = array(
+                "Thang"=> "Tháng $thang",
+                "SoLuong"=> $row["SoLuong"],
+            ); 
+        }
+        // Chuyển đổi dữ liệu thành định dạng JSON
+        echo json_encode($data);
     }
     private function muontra() {
         
