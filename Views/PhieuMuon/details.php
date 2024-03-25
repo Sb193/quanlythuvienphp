@@ -29,7 +29,7 @@
                         <div class="form-group">
                             <label for="TenDS" class="control-label col-md-12">Thể loại</label>
                             <div class="col-md-12">
-                            <input readonly type="text" name="TheLoai" id="" class="form-control bg-white" value="<?php echo $phieumuon->getMaNV(); ?>">
+                                <input readonly type="text" name="TheLoai" id="" class="form-control bg-white" value="<?php echo $phieumuon->getMaNV(); ?>">
                                 
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                             <div class="col-md-6">
                                 <label for="ngaysinh" class="control-label col-md-12">Ngày mượn</label>
                                 <div class="col-md-12">
-                                    <input type="date" name="NgayMuon" id="" class="form-control">
+                                    <input readonly type="date" name="NgayMuon" id="" class="form-control bg-white" value="<?php echo $phieumuon->getNgayMuon() ?>">
                                     
                                 </div>
                             </div>
@@ -46,7 +46,7 @@
                             <div class="col-md-6">
                                 <label for="sdt" class="control-label col-md-12">Ngày trả</label>
                                 <div class="col-md-12">
-                                    <input type="date" name="NgayTra" id="" class="form-control">
+                                    <input readonly type="date" name="NgayMuon" id="" class="form-control bg-white" value="<?php echo $phieumuon->getNgayTra() ?>">
                                     
                                 </div>
                             </div>
@@ -56,32 +56,27 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="diachi" class="control-label col-md-12">Lựa chọn</label>
+                            <label for="luachon" class="control-label col-md-12">Lựa chọn</label>
                             <div class="col-md-12">
-                                <select class="form-control" name="LuaChon" id="">
-                                    <!-- Sửa sau-->
-                                    <option value="Tại chỗ">Tại chỗ</option>
-                                    <option value="Mang về">Mang về</option>
-                                </select>
+                                <input readonly type="text" name="luachon" id="" class="form-control bg-white" value="<?php echo $phieumuon->getLuaChon() ?>">
                             </div>
                         </div>
 
                         
 
                         <div class="form-group">
-                            <label for="taikhoan" class="control-label col-md-12">Trạng thái</label>
+                            <label for="trangthai" class="control-label col-md-12">Trạng thái</label>
                             <div class="col-md-12">
-                                <select class="form-control" name="TrangThai" id="">
-
-                                    <option value="Đang mượn">Đang mượn</option>
-                                    <option value="Đã hoàn thành">Đã hoàn thành</option>
-                                    <option value="Quá hạn">Quá hạn</option>
-                                </select>
+                                <input readonly type="text" name="trangthai" id="" class="form-control bg-white" value="<?php echo $phieumuon->getTrangThai() ?>">
                             </div>
                         </div>
 
                         
 
+                    </div>
+
+                    <div class="card-footer">
+                        <a class="btn btn-primary" href="index.php?controller=phieumuon&action=index">Trở lại</a>
                     </div>
 
                 </div>
@@ -90,6 +85,47 @@
 
             
         </div>
+
+        <div>
+         
+            <?php if ($pp){?>
+                <div class="card shadow mt-4 mb-2">
+                
+                    <div class="form-horizontal">
+                        <div class="card-header bg-danger ">
+                            <h4 class="font-weight-bold text-white d-flex justify-content-center align-items-center m-0">Thông tin phạt</h4>
+                        </div>
+
+
+                        <div class="card-body">
+                            <!--Start form-->
+                            
+
+                            <div class="form-group">
+                                <label for="TenTG" class="control-label col-md-12">Lý do</label>
+                                <div class="col-md-12">
+                                    <input readonly type="text" name="TenTG" id="" class="form-control bg-white" value="<?php echo $pp->LyDo ?>">
+                                    
+                                </div>
+                            </div>
+
+                            
+
+
+                        </div>
+
+                        
+
+                    </div>
+            
+
+
+            
+                </div>
+            <?php }?>
+        </div>
+
+
         <?php
         foreach ($ct as $ctpm) {
         ?>
@@ -141,46 +177,7 @@
 
 
         <?php }?>
-        <div>
-         
-            <?php if ($pp){?>
-                <div class="card shadow mt-4 mb-2">
-                
-                <div class="form-horizontal">
-                    <div class="card-header bg-danger ">
-                        <h4 class="font-weight-bold text-white d-flex justify-content-center align-items-center m-0">Thông tin phạt</h4>
-                    </div>
-
-
-                    <div class="card-body">
-                        <!--Start form-->
-                        
-
-                        <div class="form-group">
-                            <label for="TenTG" class="control-label col-md-12">Lý do</label>
-                            <div class="col-md-12">
-                                <input readonly type="text" name="TenTG" id="" class="form-control bg-white" value="<?php echo $pp->LyDo ?>">
-                                
-                            </div>
-                        </div>
-
-                        
-
-
-                    </div>
-
-                    
-
-                </div>
-            
-
-
-            
-        </div>
-            <?php }?>
-
-
-        </div>
+        
 
 </div>
     <script src="https://kit.fontawesome.com/d69cbc9d77.js" crossorigin="anonymous"></script>

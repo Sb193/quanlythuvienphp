@@ -31,5 +31,12 @@
             );
             return $db->insert_data($table, $data);
         }
+
+        public function deletePhieuPhat() {
+            $db = Database::getInstance();
+            $table = "PhieuPhat";
+            $where = "MaPP = '$this->MaPP'";
+            return $db->delete_data($table, $where);
+        }
     }
 ?>

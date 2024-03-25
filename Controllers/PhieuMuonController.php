@@ -154,11 +154,11 @@ class PhieuMuonController {
     private function delete() {
         if (isset($_GET["id"])){
             $id = $_GET["id"];
-            $dausach = DauSach::getDS($id);
-            if($dausach){
-                $result = $dausach->deleteDauSach();
+            $phieumuon = PhieuMuon::getPhieuMuonbyID($id);
+            if($phieumuon){
+                $result = $phieumuon->deletePM();
                 if ($result >= 0){
-                    header("location:index.php?controller=sach&action=index");
+                    header("location:index.php?controller=phieumuon&action=index");
                 } else {
                     
                 }

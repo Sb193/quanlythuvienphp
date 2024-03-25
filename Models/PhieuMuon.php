@@ -152,7 +152,9 @@
         $table = "PhieuMuon";
         $result = $db->getData($table);
         while ($row = $result->fetch()) {
-            $phieumuon[] = new PhieuMuon($row['MaPM'] , $row['MaTTV'] ,$row['MaNV'], $row['NgayMuon'] , $row['NgayTra'] , $row['LuaChon'] , $row['TrangThai']);
+            $pm = new PhieuMuon($row['MaPM'] , $row['MaTTV'] ,$row['MaNV'], $row['NgayMuon'] , $row['NgayTra'] , $row['LuaChon'] , $row['TrangThai']);
+			$pm->checkPhieuMuon();
+			$phieumuon[] = $pm;
         }
         return $phieumuon;
     }
@@ -236,7 +238,7 @@
 	public function createPP(){
 		$phieuphat = PhieuPhat::getPPbyPM($this->MaPM);
 		if ($phieuphat) {
-			$this->TrangThai = "Đã phạt Lý do: $phieuphat->LyDo";
+			$this->TrangThai = "Đã phạt";
 		} else {
 			return;
 		}
@@ -253,6 +255,32 @@
 				}
 			}
 		}
+	}
+
+	public function deletePM(){
+		$db = Database::getInstance();
+
+		$ct = $this->getCTPM();
+
+		foreach ($ct as $pm) {
+			$sach = Sach::getSachbyID($pm->getMaSach());
+			if ($sach) {
+				$sach->painSach();
+			}
+
+			$pm->deleteCTPM();
+		}
+		$pp = PhieuPhat::getPPbyPM($this->MaPM);
+		if ($pp) {
+			$result = $pp->deletePhieuPhat();
+			if ($result > 0){
+				$table = "PhieuMuon";
+				$where = "MaPM = '$this->MaPM'";
+				return $db->delete_data($table, $where);
+			}
+		}
+
+		return -1;
 	}
 
 }
