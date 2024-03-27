@@ -84,11 +84,49 @@
 
                     </div>
 
+                    <div class="card-footer d-flex align-items-center justify-content-center">
+                        
+                        <a href="index?controller=phieumuon&action=index" class="btn btn-success h4 pl-3 pr-3">Xong</a>
+                            
+                    </div>
+
                 </div>
             
 
 
             
+        </div>
+
+        <div>
+            <div class="card shadow mb-6" style="margin-top: 10px">
+                <div class="card-header">
+                    <h4 class="font-weight-bold text-primary d-flex justify-content-center align-items-center m-0">Thêm chi tiết phiếu</h4>
+                </div>
+
+                <div class="card-body">
+                    <form action="" method="post">
+                        <div class="form-group">
+                            <input hidden type="text" name="MaPM" id="" class="form-control bg-white" value="<?php echo $phieumuon->getMaPM() ?>">
+                            <label for="TenDS" class="control-label col-md-12">Mã Sách</label>
+                            <div class="col-md-12">
+                                <input type="text" name="MaSach" id="" class="form-control bg-white">
+                                
+                            </div>
+                        </div>
+
+                        <span class="text-danger"><?php echo $error ?></span>
+
+                        <div class="form-group d-flex align-items-center justify-content-center">
+                            
+                                <input type="submit" name="add_sach" value="Thêm" class="btn btn-primary pl-3 pr-3" />
+                            
+
+                            
+                        </div>
+
+                    </form>
+                </div>
+            </div>
         </div>
         <?php
         foreach ($ct as $ctpm) {
@@ -141,39 +179,7 @@
 
 
         <?php }?>
-        <div>
-            <div class="card shadow mb-6" >
-                <div class="card-header">
-                    <h4 class="text-primary">Thêm chi tiết phiếu</h4>
-                </div>
-
-                <div class="card-body">
-                    <form action="" method="post">
-                        <div class="form-group">
-                            <input hidden type="text" name="MaPM" id="" class="form-control bg-white" value="<?php echo $phieumuon->getMaPM() ?>">
-                            <label for="TenDS" class="control-label col-md-12">Mã Sách</label>
-                            <div class="col-md-12">
-                                <input type="text" name="MaSach" id="" class="form-control bg-white">
-                                
-                            </div>
-                        </div>
-
-                        <span class="text-danger"><?php echo $error ?></span>
-
-                        <div class="form-group d-flex align-items-center">
-                            <div class="col-md-offset-2 col-md-5 text-right">
-                                <input type="submit" name="add_sach" value="Thêm" class="btn btn-primary pl-3 pr-3" />
-                            </div>
-
-                            <div class="col-md-offset-2 col-md-5 ">
-                                <a href="index?controller=phieumuon&action=index" class="btn btn-default h4 pl-3 pr-3">Trở lại</a>
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
+        
 
 </div>
     <script src="https://kit.fontawesome.com/d69cbc9d77.js" crossorigin="anonymous"></script>

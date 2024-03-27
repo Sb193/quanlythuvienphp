@@ -176,28 +176,31 @@ class PhieuMuonController {
                 $ct = $phieumuon->getCTPM();
                 $error = "";
                 if (isset($_POST["add_sach"])){
-                    $phieumuon = $_POST["MaPM"];
+                    $mapm = $_POST["MaPM"];
                     $sach = $_POST["MaSach"];
                     $s =Sach::getSachbyID($sach);
-                    $pm = PhieuMuon::getPhieuMuonbyID($phieumuon);
+                    $pm = PhieuMuon::getPhieuMuonbyID($mapm);
                     $ttv = TheThuVien::getTTVbyID($pm->getMaTTV());
                     
                     if (!$s) {
+                        $phieumuon = PhieuMuon::getPhieuMuonbyID($mapm);
                         $error = "Sách không tồn tại!";
                         $content = "Views/PhieuMuon/detail.php";
                         include "Views/Shared/HomeView/layout.php";
                     } else if($s->getTrangThai() != 1){
+                        $phieumuon = PhieuMuon::getPhieuMuonbyID($mapm);
                         $error = "Sách đã được mượn ở nơi khác!";
                         $content = "Views/PhieuMuon/detail.php";
                         include "Views/Shared/HomeView/layout.php";
                     } else if($ttv->checkvar() <= 0){
+                        $phieumuon = PhieuMuon::getPhieuMuonbyID($mapm);
                         $error = "Độc giả này đã mượn tối đa sách có thể mượn";
                         $content = "Views/PhieuMuon/detail.php";
                         include "Views/Shared/HomeView/layout.php";
                     } else {
-                        $ct = new ChiTietPhieuMuon($phieumuon , $sach);
+                        $ct = new ChiTietPhieuMuon($mapm , $sach);
                         if ($ct->addCTPM() >= 0){
-                            header("location:index.php?controller=phieumuon&action=detail&id=$phieumuon");
+                            header("location:index.php?controller=phieumuon&action=detail&id=$mapm");
                         } else {
                             $error = "Thêm thất bại!";
                             $content = "Views/PhieuMuon/detail.php";
