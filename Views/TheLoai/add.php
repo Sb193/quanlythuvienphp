@@ -36,7 +36,7 @@
                             </div>
 
                             <div class="col-md-offset-2 col-md-5 ">
-                                <a href="index?controller=taikhoan&action=index" class="btn btn-default h4 pl-3 pr-3">Trở lại</a>
+                                <a href="index?controller=theloai&action=index" class="btn btn-default h4 pl-3 pr-3">Trở lại</a>
                             </div>
                         </div>
 
