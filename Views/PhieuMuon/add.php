@@ -19,19 +19,90 @@
                         <div class="form-group">
                             <label for="hoten" class="control-label col-md-12">Mã thẻ thư viện</label>
                             <div class="col-md-12">
-                                <input type="text" name="MaTTV" id="" class="form-control">
+                                <input type="text" name="MaTTV" id="mattv" class="form-control">
                                 <span class="text-danger"><?php echo $erorr_mattv ?></span>
+                                <span class="text-danger" id="error"></span>
                             </div>
                         </div>
+
+
+                        <div style="display: none" id = "TheThuVien">
+                            <div class="form-group">
+                                <label for="hoten" class="control-label col-md-12">Họ tên</label>
+                                <div class="col-md-12">
+                                    <input readonly type="text" name="noname" id="hoten" class="form-control bg-white">
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="hoten" class="control-label col-md-12">Loại độc giả</label>
+                                <div class="col-md-12">
+                                    <input readonly type="text" name="noname" id="loaidg" class="form-control bg-white">
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="hoten" class="control-label col-md-12">Thời hạn</label>
+                                <div class="col-md-12">
+                                    <input readonly type="text" name="noname" id="thoihan" class="form-control bg-white">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                        <script>
+                            // Lấy tham chiếu đến thẻ input
+                            var input = $('#mattv');
+                            var thethuvien = document.getElementById('TheThuVien');
+                            var error = document.getElementById('error');
+                            var hoten = document.getElementById('hoten');
+                            var loaidg = document.getElementById('loaidg');
+                            var thoihan = document.getElementById('thoihan');
+
+                            // Thêm sự kiện 'change' cho thẻ input
+                            input.change(function() {
+                                // Thực hiện yêu cầu AJAX
+                                $.ajax({
+                                    url: 'index.php?controller=docgia&action=getdata',
+                                    type: 'POST',
+                                    data: { ma: input.val() },
+                                    success: function(data) {
+                                        var result = JSON.parse(data);
+                                        console.log(result);
+                                        // In thông tin người dùng ra màn hình
+                                        var tt = result.tt;
+                                        if (tt == 1){
+                                            thethuvien.style.display = 'block';
+                                            hoten.value =result.hoten;
+                                            if (result.loaidg == 1)
+                                                loaidg.value = "Giáo viên";
+                                            else
+                                                loaidg.value = "Học sinh";
+                                            thoihan.value =result.thoihan;
+                                        }else {
+                                            thethuvien.style.display = 'none';
+                                            error.textContent = result.error;
+                                        }
+                                    },
+                                    error: function(jqXHR, textStatus, errorThrown) {
+                                        // Xử lý lỗi
+                                        console.error(textStatus, errorThrown);
+                                    }
+                                });
+                            });
+                        </script>
 
 
                         <div class="form-group">
-                            <label for="hoten" class="control-label col-md-12">Mã nhân viên</label>
+                            <label for="nv" class="control-label col-md-12">Nhân viên</label>
                             <div class="col-md-12">
-                                <input type="text" name="MaNV" id="" class="form-control">
-                                <span class="text-danger"><?php echo $erorr_manv ?></span>
+                                <input readonly type="text" name="noname" value="<?php echo $_SESSION['user']['HoTen'] ?>" class="form-control bg-white">
                             </div>
                         </div>
+                        
 
                         
                         <div class="form-group row">

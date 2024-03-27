@@ -79,16 +79,14 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <?php 
-                if ($_SESSION['user']['LoaiTK'] == '0'){
-            ?>
+            
             <li class="nav-item">
                 <a class="nav-link" href="index.php?controller=phieumuon&action=index">
                     <i class="fas fa-clipboard-list"></i>
                     <span>Quản lí mượn trả</span>
                 </a>
             </li>
-            <?php } ?>
+            
             
 
             <!-- Nav Item - Charts -->
@@ -107,9 +105,7 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                     </div>
                 </div>
             </li>
-            <?php 
-                if ($_SESSION['user']['LoaiTK'] == '0'){
-            ?>
+            
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                     <a class="nav-link" href="index.php?controller=docgia&action=index">
@@ -117,8 +113,6 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                         <span>Quản lí độc giả</span>
                     </a>
             </li>
-
-            <?php } ?>
 
             <?php 
                 if ($_SESSION['user']['LoaiTK'] == '1'){
@@ -172,7 +166,7 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                     </button>
 
                     <!-- Topbar Search -->
-                    <form
+                    <!-- <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
                             <input type="text" class="form-control bg-light border-0 small" placeholder="Tìm kiếm..."
@@ -183,7 +177,7 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    </form> -->
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">

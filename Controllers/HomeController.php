@@ -10,7 +10,9 @@ class HomeController {
             case 'logout':
                 $this->logout();
                 break;
-            
+            case '403':
+                $this->e403();
+                break;
             default:
                 $this->index();
                 break;
@@ -51,6 +53,11 @@ class HomeController {
         }
         
         $content = "Views/Home/Home.php";
+        include "Views/Shared/HomeView/layout.php";
+    }
+
+    private function e403(){
+        $content = "Views/Home/error403.php";
         include "Views/Shared/HomeView/layout.php";
     }
 

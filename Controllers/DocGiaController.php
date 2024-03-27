@@ -16,6 +16,9 @@ class DocGiaController {
             case 'delete':
                 $this->delete();
                 break;
+            case 'getdata':
+                $this->getdata();
+                break;
             default:
                 $this->index();
                 break;
@@ -194,5 +197,29 @@ class DocGiaController {
             }
         } 
     }
+
+    private function getdata() {
+        if ($_SERVER['REQUEST_METHOD']=='POST'){
+            if (isset($_POST['ma'])){
+                $id = $_POST['ma'];
+                $ttv = TheThuVien::getTTVbyID($id);
+                if($ttv){
+                    $dg =DocGia::getDocGiaByMaTTV($ttv->getMaTTV());
+                    $data = array(
+                        'tt' => "1", 
+                        'hoten' => $dg->getHoTen(),
+                        'loaidg'=> $dg->getLoaiDG(),
+                        'thoihan' => $ttv->getThoiHan()
+
+                    );
+                    echo json_encode($data);
+                }else{
+                    echo json_encode(array('tt' => '0','error'=> 'Không tồn tại độc giả có mã trên'));
+                }
+            } else {
+                echo json_encode(array('tt' => '0','error'=> 'Không tồn tại'));
+            }
+        }
+    }    
 }
 ?> 

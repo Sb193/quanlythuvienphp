@@ -63,6 +63,9 @@ class PhieuMuonController {
             $NgayTra = $_POST["NgayTra"];
             $LuaChon = $_POST["LuaChon"];
             $TrangThai = $_POST["TrangThai"];
+            $dateM = date_create($NgayMuon);
+            $dateT = date_create($NgayTra);
+            
 
             $thethuvien = TheThuVien::getTTVbyID($MaTTV);
 
@@ -80,6 +83,14 @@ class PhieuMuonController {
                 include "Views/Shared/HomeView/layout.php";
             } else if($thethuvien->checkvar() <= 0) {
                 $erorr_mattv = "Độc giả đã mượn tối đa sách có thể mượn";
+                $content = "Views/PhieuMuon/add.php";
+                include "Views/Shared/HomeView/layout.php";
+            } else if ($dateM > $dateT){
+                $erorr_ngaymuon = "Ngày trả không thể nhỏ hơn ngày mượn";
+                $content = "Views/PhieuMuon/add.php";
+                include "Views/Shared/HomeView/layout.php";
+            } else if (date_diff($dateT, $dateM)->days > 7){
+                $erorr_ngaymuon = "Số ngày mượn tối đa là 7 ngày";
                 $content = "Views/PhieuMuon/add.php";
                 include "Views/Shared/HomeView/layout.php";
             } else {

@@ -46,6 +46,7 @@ class NhanVienController {
             $sdt =$_POST["sdt"];
             $taikhoan =$_POST["taikhoan"];
             $matkhau =$_POST["matkhau"];
+            $loaitk =$_POST["loaitk"];
 
             if ($hoten == "") {
                 $erorr_hoten = "Vui lòng nhập họ tên";
@@ -92,7 +93,7 @@ class NhanVienController {
                 $nv->setNgaySinh($ngaysinh);
                 $nv->setDiaChi($diachi);
                 $nv->setSdt($sdt);
-                $nv->setTaiKhoan(new TaiKhoan($taikhoan,$matkhau,"0"));
+                $nv->setTaiKhoan(new TaiKhoan($taikhoan,$matkhau,$loaitk));
                 $result = $nv->addNhanVien();
                 if ($result == -2){
                     $erorr = "Thêm nhân viên không thành công!(Tài khoản đã tồn tại)";
