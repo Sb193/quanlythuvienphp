@@ -15,7 +15,10 @@
                         <div class="form-group">
                             <label for="loaidg" class="control-label col-md-12">Loại độc giả</label>
                             <div class="col-md-12">
-                                <input type="text" name="loaidg" id="" class="form-control">
+                                <select name="loaidg" class="form-control" id="">
+                                    <option class="form-control" value="0">Học sinh</option>
+                                    <option class="form-control" value="1">Giáo viên</option>
+                                </select>
                                 <span class="text-danger"><?php echo $erorr_loaidg ?></span>
                             </div>
                         </div>

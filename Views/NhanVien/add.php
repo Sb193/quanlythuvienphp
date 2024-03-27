@@ -53,6 +53,17 @@
                             </div>
                         </div>
 
+
+                        <div class="form-group">
+                            <label for="loaitk" class="control-label col-md-12">Chức năng</label>
+                            <div class="col-md-12">
+                                <select name="loaitk" class="form-control" id="">
+                                    <option value="0">Nhân viên</option>
+                                    <option value="1">Quản trị viên</option>
+                                </select>
+                            </div>
+                        </div>
+
                         
 
                         <div class="form-group">
@@ -62,6 +73,8 @@
                                 <span class="text-danger"><?php echo $erorr_taikhoan ?></span>
                             </div>
                         </div>
+
+                        
 
                         <div class="form-group row">
                             <div class="col-md-5">

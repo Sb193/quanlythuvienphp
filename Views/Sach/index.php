@@ -33,8 +33,12 @@
             
             <td>
                 <a class="btn btn-success" href="index.php?controller=sach&action=detail&id=<?php echo $book->getMaDS();?>">Xem</a>
+                <?php 
+                    if ($_SESSION['user']['LoaiTK'] == '1'){
+                ?>
                 <a class="btn btn-primary" href="index.php?controller=sach&action=edit&id=<?php echo $book->getMaDS();?>">Sửa</a>
                 <button class="xoa btn btn-danger" data-id="<?php echo $book->getMaDS();?>">Xóa</button>
+                <?php } ?>
             </td>
         </tr>
         <?php } ?>

@@ -48,7 +48,16 @@ class TaiKhoan {
     
         $result = $stmt->fetch();
         if ($result){
-            return $result;
+            $sql = "SELECT * FROM nhanvien , taikhoan , nguoi WHERE nhanvien.TaiKhoan = TaiKhoan.TaiKhoan AND nhanvien.MaNguoi = nguoi.MaNguoi AND taikhoan.TaiKhoan = '$username';";
+            $result2 = $db->getDatas($sql)->fetch();
+            if ($result2){
+                return $result2;
+            } else {
+                
+                return $result;
+            }
+            
+            
         } else {
             return NULL;
         }

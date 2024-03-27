@@ -79,13 +79,16 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            
+            <?php 
+                if ($_SESSION['user']['LoaiTK'] == '0'){
+            ?>
             <li class="nav-item">
                 <a class="nav-link" href="index.php?controller=phieumuon&action=index">
                     <i class="fas fa-clipboard-list"></i>
                     <span>Quản lí mượn trả</span>
                 </a>
             </li>
+            <?php } ?>
             
 
             <!-- Nav Item - Charts -->
@@ -104,15 +107,22 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                     </div>
                 </div>
             </li>
-
+            <?php 
+                if ($_SESSION['user']['LoaiTK'] == '0'){
+            ?>
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                     <a class="nav-link" href="index.php?controller=docgia&action=index">
                         <i class="fa-solid fa-users"></i>
                         <span>Quản lí độc giả</span>
                     </a>
-                </li>
+            </li>
 
+            <?php } ?>
+
+            <?php 
+                if ($_SESSION['user']['LoaiTK'] == '1'){
+            ?>        
             <hr class="sidebar-divider d-none d-md-block">
 
             <!-- Nav Item - Charts -->
@@ -132,6 +142,7 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                 </li>
             </div>
 
+            <?php } ?>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

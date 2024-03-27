@@ -128,9 +128,9 @@ class ThongKeController {
         $result = $db->getDatas($sql);
         $sldhd = $result->fetch()["SLSM"];
 
-        $sql = "SELECT COUNT(MaDG) AS SLCL FROM `docgia`, `thethuvien` WHERE docgia.MaTTV = thethuvien.MaTTV AND thethuvien.ThoiHan <= CURDATE();";
+        $sql = "SELECT COUNT(MaDG) AS SLCL FROM `docgia`, `thethuvien` WHERE docgia.MaTTV = thethuvien.MaTTV AND thethuvien.ThoiHan < CURDATE();";
         $result = $db->getDatas($sql);
-        $slsachconlai = $result->fetch()["SLCL"];
+        $slnhd = $result->fetch()["SLCL"];
         
         $content = "Views/ThongKe/thongkedocgia.php";
         include "Views/Shared/HomeView/layout.php";

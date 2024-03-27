@@ -22,14 +22,14 @@
                         <div class="form-group">
                             <label for="loaidg" class="control-label col-md-12">Loại độc giả</label>
                             <div class="col-md-12">
-                                <input type="text" name="loaidg" id="" class="form-control" value="<?php echo $docgia->getLoaiDG(); ?>">
+                                <input type="text" readonly name="loaidg" id="" class="form-control bg-white" value="<?php if ($docgia->getLoaiDG() == 1){ echo "Giáo viên";} else { echo "Học sinh";} ?>">
                                 <span class="text-danger"><?php echo $erorr_loaidg ?></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="mattv" class="control-label col-md-12">Mã thẻ thư viện</label>
                             <div class="col-md-12">
-                                <input type="text" name="mattv" id="" class="form-control" value="<?php echo $docgia->getMaTTV(); ?>">
+                                <input readonly type="text" name="mattv" id="" class="form-control bg-white" value="<?php echo $docgia->getMaTTV(); ?>">
                                 <span class="text-danger"><?php echo $erorr_mattv ?></span>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                         <!--End Form-->
                         <div class="form-group d-flex align-items-center">
                             <div class="col-md-offset-2 col-md-5 text-right">
-                                <input type="submit" name="edit_docgia" value="Thêm" class="btn btn-primary pl-3 pr-3" />
+                                <input type="submit" name="edit_docgia" value="Cập nhật" class="btn btn-primary pl-3 pr-3" />
                             </div>
 
                             <div class="col-md-offset-2 col-md-5 ">

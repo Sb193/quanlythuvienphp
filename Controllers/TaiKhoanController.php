@@ -90,6 +90,7 @@ class TaiKhoanController {
                 if (isset($_POST["edit_nhanvien"])){
                     $taikhoan =$_POST["taikhoan"];
                     $matkhau =$_POST["matkhau"];
+                    $loaitk = $_POST["loaitk"];
 
                     if ($taikhoan == ""){
                         $erorr_taikhoan = "Vui lòng nhập tài khoản";

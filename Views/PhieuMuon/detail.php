@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center">
 <div class="dl-horizontal col-md-8">
-        <div class="card shadow mb-6 ">
+        <div class="card shadow mb-6 " style = "margin-top: 10px;">
             
                 <div class="form-horizontal">
                     <div class="card-header">
@@ -142,7 +142,7 @@
 
         <?php }?>
         <div>
-            <div class="card shadow mb-6">
+            <div class="card shadow mb-6" >
                 <div class="card-header">
                     <h4 class="text-primary">Thêm chi tiết phiếu</h4>
                 </div>

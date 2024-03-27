@@ -58,7 +58,7 @@ class PhieuMuonController {
 
         if (isset($_POST["add_phieumuon"])) {
             $MaTTV =$_POST["MaTTV"];
-            $MaNV = $_POST["MaNV"];
+            $MaNV = $_SESSION['user']['MaNV'];
             $NgayMuon = $_POST["NgayMuon"];
             $NgayTra = $_POST["NgayTra"];
             $LuaChon = $_POST["LuaChon"];
@@ -254,6 +254,7 @@ class PhieuMuonController {
             $id = $_GET["id"];
             $pm = PhieuMuon::getPhieuMuonbyID($id);
             if($pm){
+                $ct = $pm->getCTPM();
                 if (isset($_POST["add_pp"])){
                     $Lydo = $_POST['lydo'];
                 
@@ -261,7 +262,7 @@ class PhieuMuonController {
                     
                     if ($pp->addPhieuPhat() >= 0){
                         $pm->createPP();
-                        header("location:index.php?controller=phieumuon&action=detail&id=$id");
+                        header("location:index.php?controller=phieumuon&action=details&id=$id");
                     } else {
                         
                     }

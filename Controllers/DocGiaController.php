@@ -163,7 +163,7 @@ class DocGiaController {
                         $dg->setNgaySinh($ngaysinh);
                         $dg->setDiaChi($diachi);
                         $dg->setSdt($sdt);
-                        $result = $dg->addDocGia();
+                        $result = $dg->editDocGia();
                                                 
                         header("location:index.php?controller=docgia&action=index");
                     } 

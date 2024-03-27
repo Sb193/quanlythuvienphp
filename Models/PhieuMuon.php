@@ -159,6 +159,20 @@
         return $phieumuon;
     }
 
+	public static function getPMbyDG($MaTTV) {
+		$db = Database::getInstance();
+		$phieumuon = [];
+		$table = "PhieuMuon";
+		$field = "MaTTV";
+        $result = $db->getData($table, $field, $MaTTV);
+        while ($row = $result->fetch()) {
+            $pm = new PhieuMuon($row['MaPM'] , $row['MaTTV'] ,$row['MaNV'], $row['NgayMuon'] , $row['NgayTra'] , $row['LuaChon'] , $row['TrangThai']);
+			$pm->checkPhieuMuon();
+			$phieumuon[] = $pm;
+        }
+        return $phieumuon;
+	}
+
 	public static function getPhieuMuonbyID($id) {
         $db = Database::getInstance();
         $table = "PhieuMuon";
@@ -278,6 +292,10 @@
 				$where = "MaPM = '$this->MaPM'";
 				return $db->delete_data($table, $where);
 			}
+		} else {
+			$table = "PhieuMuon";
+			$where = "MaPM = '$this->MaPM'";
+			return $db->delete_data($table, $where);
 		}
 
 		return -1;

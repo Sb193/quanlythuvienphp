@@ -1,6 +1,7 @@
 <?php
 require_once 'Models/dbconfig.php';
 require_once ("Models/Nguoi.php");
+require_once ("Models/PhieuMuon.php");
 require_once ("Models/TheThuVien.php");
 
 class DocGia extends Nguoi
@@ -44,12 +45,11 @@ class DocGia extends Nguoi
         return $docgias;
     }
     public static function getDocGiaById($id) {
-        $docgia = null;
-        $sql = "SELECT docgia.MaDG, docgia.LoaiDG, docgia.MaTTV, nguoi.HoTen, nguoi.NgaySinh, nguoi.DiaChi, nguoi.Sdt FROM docgia, nguoi WHERE docgia.MaNguoi = nguoi.MaNguoi AND docgia.MaDG = '$id';";
         $db = Database::getInstance();
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        $docgia = null;
+        $sql = "SELECT * FROM docgia, nguoi WHERE docgia.MaNguoi = nguoi.MaNguoi AND docgia.MaDG = '$id';";
+        $result = $db->getDatas($sql);
+        while($row = $result->fetch()){
             $docgia = new DocGia($row['MaDG'], $row['LoaiDG'], $row['MaTTV'], $row['MaNguoi'],$row['HoTen'],$row['NgaySinh'],$row['DiaChi'],$row['Sdt']);
         }
         return $docgia;
@@ -98,19 +98,28 @@ class DocGia extends Nguoi
     public function editDocGia() {
         $docgia = DocGia::getDocGiaById($this->MaDG);
         if($docgia){
-            $this->editNguoi();
+            return $this->editNguoi();
             
-        }        
+        }
+        return -1;     
     }
+
+
+
     public function deleteDocGia(){
         $db = Database::getInstance();
         $docgia = DocGia::getDocGiaById($this->MaDG);
         if ($docgia){
+            $pm = PhieuMuon::getPMbyDG($this->MaTTV);
+            foreach ($pm as $phieumuon) {
+                $phieumuon->deletePM();
+            }
+
             $table = "DocGia";
             $where = "MaDG = '$this->MaDG'";
             $result = $db->delete_data($table, $where);
-            if($result < 0){
-                if($this->deleteNguoi() < 0){
+            if($result > 0){
+                if($this->deleteNguoi() >= 0){
                     $thethuvien = TheThuVien::getTTVbyID($this->MaTTV);
                     if ($thethuvien->deleteTTV() >= 0){
                         return 1;
