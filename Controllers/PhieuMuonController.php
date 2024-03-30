@@ -68,7 +68,7 @@ class PhieuMuonController {
             
 
             $thethuvien = TheThuVien::getTTVbyID($MaTTV);
-
+            $phieumuon = new PhieuMuon("",$MaTTV, $MaNV, $NgayMuon , $NgayTra , $LuaChon ,$TrangThai);
             if ($MaTTV == ""){
                 $erorr_mattv = "Vui lòng nhập mã thẻ thư viện";
                 $content = "Views/PhieuMuon/add.php";
@@ -91,6 +91,10 @@ class PhieuMuonController {
                 include "Views/Shared/HomeView/layout.php";
             } else if (date_diff($dateT, $dateM)->days > 7){
                 $erorr_ngaymuon = "Số ngày mượn tối đa là 7 ngày";
+                $content = "Views/PhieuMuon/add.php";
+                include "Views/Shared/HomeView/layout.php";
+            } else if($phieumuon->check_pp()){
+                $erorr_mattv = "Thẻ thư viện này không đủ điều kiện mượn";
                 $content = "Views/PhieuMuon/add.php";
                 include "Views/Shared/HomeView/layout.php";
             } else {

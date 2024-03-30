@@ -15,6 +15,7 @@
                         <span class="text-danger"><?php echo $erorr ?></span>
                         <!--Start form-->
                         <input hidden type="text" name="MaTL" id="" class="form-control" value="<?php echo $data->getMaTL();?>">
+                        
 
                         <div class="form-group">
                             <label for="taikhoan" class="control-label col-md-12">Tên thể loại</label>

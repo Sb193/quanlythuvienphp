@@ -67,7 +67,7 @@
                 let idNguoiDung = this.getAttribute('data-id');
 
                 Swal.fire({
-                    title: 'Bạn có chắc chắn muốn xóa nhân viên này không?',
+                    title: 'Bạn có chắc chắn muốn xóa phiếu mượn này không?',
                     icon: 'error',
                     showCancelButton: true,
                     confirmButtonColor: '#e74a3b',

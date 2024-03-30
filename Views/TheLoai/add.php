@@ -15,6 +15,13 @@
                         <span class="text-danger"><?php echo $erorr ?></span>
                         <!--Start form-->
                         
+                        <div class="form-group">
+                            <label for="taikhoan" class="control-label col-md-12">Mã thể loại</label>
+                            <div class="col-md-12">
+                                <input type="number" name="MaTL" id="" class="form-control">
+                                <span class="text-danger"><?php echo $erorr_matl ?></span>
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <label for="taikhoan" class="control-label col-md-12">Tên thể loại</label>

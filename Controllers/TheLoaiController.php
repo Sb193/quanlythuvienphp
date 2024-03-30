@@ -35,11 +35,22 @@ class TheLoaiController {
     private function add() {
         $erorr = "";
         $erorr_name = "";
+        $erorr_matl = "";
 
         if (isset($_POST["add_theloai"])) {
+            $matl = $_POST["MaTL"];
             $tl =$_POST["TenTL"];
 
-            if ($tl == ""){
+            if ($matl == "") {
+                $erorr_matl = "Mã thể loại không được để trống";
+                $content = "Views/TheLoai/add.php";
+                include "Views/Shared/HomeView/layout.php";
+            } else if (TheLoai::getTLbyID($matl)){
+                
+                $erorr_matl = "Mã thể loại đã tồn tại";
+                $content = "Views/TheLoai/add.php";
+                include "Views/Shared/HomeView/layout.php";
+            }else if ($tl == ""){
                 $erorr_taikhoan = "Vui lòng nhập tên thể loại";
                 $content = "Views/TheLoai/add.php";
                 include "Views/Shared/HomeView/layout.php";
@@ -48,7 +59,7 @@ class TheLoaiController {
                 $content = "Views/TheLoai/add.php";
                 include "Views/Shared/HomeView/layout.php";
             } else {
-                $theloai = new TheLoai("",$tl);
+                $theloai = new TheLoai($matl,$tl);
                 $result = $theloai->addTheLoai();
                 if($result < 0){
                     $erorr = "Thêm thể loại không thành công";

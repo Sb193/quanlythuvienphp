@@ -82,6 +82,7 @@
                                             else
                                                 loaidg.value = "Học sinh";
                                             thoihan.value =result.thoihan;
+                                            error.textContent = "";
                                         }else {
                                             thethuvien.style.display = 'none';
                                             error.textContent = result.error;

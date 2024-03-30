@@ -301,5 +301,16 @@
 		return -1;
 	}
 
+	public function check_pp(){
+		$db = Database::getInstance();
+		$sql = "SELECT * FROM PhieuMuon WHERE PhieuMuon.MaTTV = '$this->MaTTV' AND PhieuMuon.TrangThai = 'Quá hạn'";
+		$result = $db->getDatas($sql);
+		if ($result){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }
 ?>

@@ -44,8 +44,10 @@ class TheLoai {
         $db = Database::getInstance();
         $result = $db->getData('TheLoai','MaTL', $id);
 
-        while ($row = $result->fetch()) {
-            return new TheLoai($row['MaTL'], $row['TenTL']);
+        if ($result) {
+            while ($row = $result->fetch()) {
+                return new TheLoai($row['MaTL'], $row['TenTL']);
+            }
         }
 
         return null;
@@ -74,6 +76,7 @@ class TheLoai {
 
         // Mảng dữ liệu
         $data = array(
+            "MaTL" => $this->MaTL,
             "TenTL" => $this->TenTL
         );
 
