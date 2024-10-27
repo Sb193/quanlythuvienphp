@@ -1,93 +1,141 @@
 <?php
-    class Database{
-        private $hostname = 'localhost';
-        private $username = 'root';
-        private $pass = '';
-        private $dbname = 'quanlythuviendb';
+class Database {
+    private static $instance = null;
+    private $pdo;
 
-        private $conn = NULL;
-        private $result = NULL;
+    private function __construct() {
+        $host = 'localhost';
+        $db   = 'qlthuvien';
+        $user = 'root';
+        $pass = '';
+        $charset = 'utf8';
 
-        // Ket noi voi database
-        public function connect(){
-            $this->conn = new mysqli($this->hostname , $this->username , $this->pass , $this->dbname);
-            if (!$this->conn){
-                echo "Kết nối thất bại";
-                exit();
-            } else {
-                mysqli_set_charset( $this->conn , 'utf8');
-            }
-            return $this->conn;
-        }
-
-        // Thuc thi cau lenh truy van
-        public function execute($sql){
-            $this->result = $this->conn->query($sql);
-            return $this->result;
-        }
-
-        // Phuong thuc lay du lieu
-        public function getData(){
-            if($this->result){
-                $data = mysqli_fetch_array($this->result);
-            } else {
-                $data = 0;
-            }
-
-            return $data;
-        }
-
-        // Phuong thuc lay toan bo du lieu
-        public function getAllData(){
-            if(!$this->result){
-                $data = 0;
-            } else {
-                while ($datas = $this->getData()){
-                    $data[] = $datas;
-                }
-            }
-            return $data;
-        }
-
-        // Phuong thuc dem so ban ghi
-
-        // Phuong thuc them du lieu
-
-        public function insertData($table, $data) {
-            // Tạo danh sách các cột và giá trị tương ứng
-            $columns = implode(", ", array_keys($data));
-            $values  = "'" . implode("', '", array_values($data)) . "'";
-        
-            // Tạo câu lệnh SQL
-            $sql = "INSERT INTO $table ($columns) VALUES ($values)";
-        
-            // Thực hiện câu lệnh SQL
-            if ($this->conn->query($sql) === TRUE) {
-                echo "New record created successfully";
-            } else {
-                echo "Error: " . $sql . "<br>" . $this->conn->error;
-            }
-        
-        }
-
-        // Phuong thuc xoa du lieu
-
-        public function deleteData($table, $condition) {     
-            // Kiểm tra kết nối
-            if ($this->conn->connect_error) {
-                die("Connection failed: " . $this->conn->connect_error);
-            }
-        
-            // Tạo câu lệnh SQL
-            $sql = "DELETE FROM $table WHERE $condition";
-        
-            // Thực hiện câu lệnh SQL
-            if ($this->conn->query($sql) === TRUE) {
-                echo "Record deleted successfully";
-            } else {
-                echo "Error deleting record: " . $this->conn->error;
-            }
-        
-        }
+        $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+        $options = [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES   => false,
+        ];
+        $this->pdo = new PDO($dsn, $user, $pass, $options);
     }
+
+    public static function getInstance() {
+        if (self::$instance === null) {
+            self::$instance = new Database();
+        }
+        return self::$instance;
+    }
+
+    public function prepare($sql) {
+        return $this->pdo->prepare($sql);
+    }
+
+    public function getData($table, $field = NULL , $id = NULL) {
+        $sql = "";
+        if ($field == NULL && $id == NULL) {
+            $sql = "SELECT * FROM $table";
+        } else {
+            $sql = "SELECT * FROM $table WHERE $field = :id";
+        }
+        $stmt = $this->prepare($sql);
+        if ($field == NULL && $id == NULL) {
+            $stmt->execute();
+        } else {
+            $stmt->execute([':id' => $id]);
+        }
+        
+        return $stmt;
+    }
+
+    public function getDatas($sql) {
+        $stmt = $this->prepare($sql);
+        $stmt->execute();
+        
+        return $stmt;
+    }
+
+    function insert_data($table, $data) {
+        // Tạo một mảng để lưu trữ các trường và các giá trị
+        $fields = array();
+        $values = array();
+      
+        // Duyệt qua mảng dữ liệu để lấy các trường và các giá trị
+        foreach ($data as $field => $value) {
+          // Thêm dấu ngoặc kép cho các trường
+          $fields[] = "`$field`";
+          // Thêm dấu hai chấm cho các giá trị
+          $values[] = ":$field";
+        }
+      
+        // Nối các trường và các giá trị thành chuỗi, cách nhau bởi dấu phẩy
+        $fields = implode(", ", $fields);
+        $values = implode(", ", $values);
+      
+        // Tạo câu truy vấn SQL để thêm dữ liệu vào bảng
+        $sql = "INSERT INTO $table ($fields) VALUES ($values)";
+        
+      
+        // Chuẩn bị câu truy vấn
+        $stmt = $this->prepare($sql);
+      
+        // Thực thi câu truy vấn với mảng dữ liệu
+        try {
+            $stmt->execute($data);
+        } 
+        catch (PDOException $e) {
+            echo $e;
+            exit;
+        }
+        
+      
+        // Trả về số dòng bị ảnh hưởng
+        return $stmt->rowCount();
+    }
+
+    function update_data($table, $data, $where) {
+        // Tạo một mảng để lưu trữ các trường và các giá trị
+        $fields = array();
+      
+        // Duyệt qua mảng dữ liệu để lấy các trường và các giá trị
+        foreach ($data as $field => $value) {
+          // Thêm dấu ngoặc kép cho các trường
+          $fields[] = "`$field` = :$field";
+        }
+
+        // Nối các trường và các giá trị thành chuỗi, cách nhau bởi dấu phẩy
+        $fields = implode(", ", $fields);
+
+      
+        // Tạo câu truy vấn SQL để thêm dữ liệu vào bảng
+        $sql = "UPDATE $table SET $fields WHERE $where";
+        // Chuẩn bị câu truy vấn
+        $stmt = $this->prepare($sql);
+
+        
+      
+        // Thực thi câu truy vấn với mảng dữ liệu
+        try {
+            $stmt->execute($data);
+        } 
+        catch (PDOException $e) {
+            return -1;
+        }
+        
+      
+        // Trả về số dòng bị ảnh hưởng
+        return $stmt->rowCount();
+    }
+
+    function delete_data($table, $where) {
+        $sql = "DELETE FROM $table WHERE $where";
+        $stmt = $this->prepare($sql);
+        try {
+            $stmt->execute();
+        } catch (PDOException $e) {
+            return -1;
+        }
+
+        return $stmt->rowCount();
+    }
+}
 ?>
