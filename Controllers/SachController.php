@@ -27,6 +27,9 @@ class SachController {
             case 'deletebook':
                 $this->deletebook();
                 break;
+            case 'getttsach':
+                $this->getsach();
+                break;
             default:
                 $this->index();
                 break;
@@ -214,6 +217,23 @@ class SachController {
                 
             }
         } else {}
+    }
+
+    private function getsach(){
+        if (isset($_POST["MaSach"])){
+            $id = $_POST["MaSach"];
+            $sach = Sach::getSachbyID($id);
+            if ($sach){
+                echo json_encode(array(
+                    "status" => "00",
+                    "MaSach" => $sach->getMaSach(),
+                ));
+            } else {
+                echo json_encode(array("status" => "01"));
+            }
+        } else {
+            echo json_encode(array("status" => "02"));
+        }
     }
 
     
