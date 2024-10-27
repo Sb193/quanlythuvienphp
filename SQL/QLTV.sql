@@ -32,7 +32,7 @@ CREATE TABLE DocGia (
 	LoaiDG INT,
 	FOREIGN KEY (MaNguoi) REFERENCES Nguoi(MaNguoi),
     	FOREIGN KEY (MaTTV) REFERENCES TheThuVien(MaTTV)
-)
+);
 
 CREATE TABLE NhanVien (
     MaNV INT AUTO_INCREMENT PRIMARY KEY,
@@ -90,3 +90,7 @@ CREATE TABLE PhieuPhat (
     LyDo VARCHAR(255) NOT NULL,
     CONSTRAINT MaPM_FK1 FOREIGN KEY (MaPM) REFERENCES PhieuMuon(MaPM)
 );
+
+INSERT INTO `nguoi` (`MaNguoi`, `HoTen`, `NgaySinh`, `DiaChi`, `Sdt`) VALUES (NULL, 'Nguyễn Văn A', '2003-03-19', 'Đào Xá, Thanh Thủy, Phú Thọ', '0394514319');
+INSERT INTO `taikhoan` (`TaiKhoan`, `MatKhau`, `LoaiTK`) VALUES ('admin', '123456', '0');
+INSERT INTO `admin` (`MaNguoi`, `TaiKhoan`) VALUES ('1', 'admin');
